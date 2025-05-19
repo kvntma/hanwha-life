@@ -1,0 +1,10 @@
+{
+  "name": "hanwha-life-scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@linear/sdk": "^2.0.0",
+    "dotenv": "^16.5.0"
+  }
+}
