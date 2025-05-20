@@ -1,69 +1,82 @@
-import { createClient } from '@supabase/supabase-js';
 import { Product, ProductInsert, ProductUpdate } from '@/types/product';
+import { useSupabaseClient } from '@/hooks/clerk/useSupabaseClient';
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+export const useProducts = () => {
+  const supabase = useSupabaseClient();
 
-export const productsApi = {
-  // Get all available products
-  getProducts: async () => {
-    const { data, error } = await supabase
-      .from('products')
-      .select('*')
-      .order('created_at', { ascending: false });
+  return {
+    // Get all available products
+    getProducts: async () => {
+      const { data, error } = await supabase
+        .from('products')
+        .select('*')
+        .order('created_at', { ascending: false });
 
-    if (error) throw error;
-    return data as Product[];
-  },
+      if (error) throw error;
+      return data as Product[];
+    },
 
-  // Get a single product by ID
-  getProduct: async (id: string) => {
-    const { data, error } = await supabase.from('products').select('*').eq('id', id).single();
+    // Get a single product by ID
+    getProduct: async (id: string) => {
+      const { data, error } = await supabase.from('products').select('*').eq('id', id).single();
 
-    if (error) throw error;
-    return data as Product;
-  },
+      if (error) throw error;
+      return data as Product;
+    },
 
-  // Create a new product
-  createProduct: async (product: ProductInsert) => {
-    const { data, error } = await supabase.from('products').insert(product).select().single();
+    // Create a new product
+    createProduct: async (product: ProductInsert) => {
+      console.log('Creating product:', product);
+      try {
+        const { data, error } = await supabase.from('products').insert(product).select().single();
 
-    if (error) throw error;
-    return data as Product;
-  },
+        if (error) {
+          console.error('Supabase error details:', {
+            message: error.message,
+            details: error.details,
+            hint: error.hint,
+            code: error.code,
+          });
+          throw error;
+        }
+        return data as Product;
+      } catch (error) {
+        console.error('Error creating product:', error);
+        throw error;
+      }
+    },
 
-  // Update a product
-  updateProduct: async (id: string, product: ProductUpdate) => {
-    const { data, error } = await supabase
-      .from('products')
-      .update(product)
-      .eq('id', id)
-      .select()
-      .single();
+    // Update a product
+    updateProduct: async (id: string, product: ProductUpdate) => {
+      const { data, error } = await supabase
+        .from('products')
+        .update(product)
+        .eq('id', id)
+        .select()
+        .single();
 
-    if (error) throw error;
-    return data as Product;
-  },
+      if (error) throw error;
+      return data as Product;
+    },
 
-  // Delete a product
-  deleteProduct: async (id: string) => {
-    const { error } = await supabase.from('products').delete().eq('id', id);
+    // Delete a product
+    deleteProduct: async (id: string) => {
+      const { error } = await supabase.from('products').delete().eq('id', id);
 
-    if (error) throw error;
-  },
+      if (error) throw error;
+    },
 
-  // Update inventory count
-  updateInventory: async (id: string, count: number) => {
-    const { data, error } = await supabase
-      .from('products')
-      .update({ inventory_count: count })
-      .eq('id', id)
-      .select()
-      .single();
+    // Update inventory count
+    updateInventory: async (id: string, count: number) => {
+      const { data, error } = await supabase
+        .from('products')
+        .update({ inventory_count: count })
+        .eq('id', id)
+        .select()
+        .single();
 
-    if (error) throw error;
-    return data as Product;
-  },
+      if (error) throw error;
+      return data as Product;
+    },
+  };
 };

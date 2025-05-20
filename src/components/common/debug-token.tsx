@@ -10,6 +10,7 @@ export default function DebugToken() {
       const token = await getToken({ template: 'supabase' });
       if (token) {
         console.log(JSON.parse(atob(token.split('.')[1])));
+        console.log('token is here');
       }
     })();
   }, []);

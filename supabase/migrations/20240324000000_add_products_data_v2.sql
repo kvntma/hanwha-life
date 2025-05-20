@@ -1,0 +1,19 @@
+-- Add new columns to products table
+ALTER TABLE products 
+  ADD COLUMN IF NOT EXISTS image text,
+  ADD COLUMN IF NOT EXISTS tagline text,
+  ADD COLUMN IF NOT EXISTS weight text,
+  ADD COLUMN IF NOT EXISTS featured boolean DEFAULT false,
+  ADD COLUMN IF NOT EXISTS category text;
+
+-- Insert products data
+INSERT INTO products (name, tagline, description, price, inventory_count, available, image, weight, featured, category)
+VALUES 
+  ('The Shredder', 'Lean machine fuel', 'Juicy grilled chicken breast with steamed broccoli and brown rice. The perfect post-workout meal to help you hit your macros without sacrificing flavor. Each bite is packed with protein to support your muscle recovery and growth.', 12.99, 100, true, 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?q=80&w=2070&auto=format&fit=crop', '12 oz', true, 'Bestseller'),
+  ('No Moo Monday', 'Plant power perfection', 'Plant-based protein bowl with quinoa, roasted vegetables, and our signature herb dressing. This vegan option packs a punch with complete proteins and essential nutrients that will keep you full and energized all day.', 11.99, 100, true, 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?q=80&w=2070&auto=format&fit=crop', '11 oz', true, 'Plant-Based'),
+  ('Bulking Beast', 'Mass gaining monster', 'Premium grass-fed beef with sweet potato and roasted vegetables. This hearty meal is designed for those serious bulk phases, providing quality protein and complex carbs to fuel your growth without excess fat.', 14.99, 100, true, 'https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=2069&auto=format&fit=crop', '14 oz', false, 'High Calorie'),
+  ('Teriyaki Titan', 'Asian-fusion gains', 'Tender chicken thighs in our house-made teriyaki sauce with jasmine rice and stir-fried vegetables. The perfect blend of sweet and savory that will transport your taste buds while keeping your nutrition on point.', 13.99, 100, true, 'https://images.unsplash.com/photo-1603133872878-684f208fb84b?q=80&w=2125&auto=format&fit=crop', '12 oz', false, 'International'),
+  ('Keto Konquest', 'Low carb, high flavor', 'Grilled chicken breast with cauliflower rice and avocado. This keto-friendly option is perfect for those looking to maintain ketosis while enjoying a satisfying meal that doesn''t taste like diet food.', 13.99, 100, true, 'https://images.unsplash.com/photo-1600335895229-6e75511892c8?q=80&w=2187&auto=format&fit=crop', '11 oz', true, 'Keto'),
+  ('Beefy Boy', 'Serious gains fuel', 'Slow-cooked beef with roasted potatoes and seasonal vegetables. This protein-packed meal provides sustained energy and muscle-building nutrients to support even the most intense training regimens.', 14.99, 100, true, 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=2070&auto=format&fit=crop', '13 oz', false, 'Bestseller'),
+  ('Green Gains', 'Plant-powered pump', 'Protein-rich lentils with roasted vegetables and our signature herb sauce. Proof that plant-based eating doesn''t mean sacrificing protein or flavor, this meal delivers both while keeping your carbon footprint low.', 12.99, 100, true, 'https://images.unsplash.com/photo-1623428187969-5da2dcea5ebf?q=80&w=2064&auto=format&fit=crop', '12 oz', false, 'Plant-Based'),
+  ('Spicy Gainz', 'Heat up your metabolism', 'Spicy chicken breast with black beans and cilantro lime rice. The perfect balance of heat and flavor, this meal will fire up your metabolism while providing quality protein for muscle recovery.', 13.49, 100, true, 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?q=80&w=1935&auto=format&fit=crop', '12 oz', false, 'Spicy'); 

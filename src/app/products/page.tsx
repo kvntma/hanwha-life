@@ -3,17 +3,31 @@
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Filter, ShoppingCart } from 'lucide-react';
-import { products, Product } from '@/data/products';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useProducts } from '@/lib/supabase/products';
+import { useQuery } from '@tanstack/react-query';
+import { Spinner } from '@/components/ui/spinner';
 
 const ProductsPage = () => {
-  const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [showFilters, setShowFilters] = useState(false);
+  const productsApi = useProducts();
 
-  const filteredProducts = activeFilter
-    ? products.filter(product => product.proteinType === activeFilter)
-    : products;
+  const {
+    data: products,
+    isLoading,
+    error: fetchError,
+  } = useQuery({
+    queryKey: ['products'],
+    queryFn: productsApi.getProducts,
+  });
+
+  const filteredProducts = products
+    ? activeCategory
+      ? products.filter(product => product.category === activeCategory)
+      : products
+    : [];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -40,39 +54,64 @@ const ProductsPage = () => {
               <h2 className="font-semibold text-lg mb-4">Filters</h2>
 
               <div className="mb-6">
-                <h3 className="font-medium mb-2">Protein Type</h3>
+                <h3 className="font-medium mb-2">Category</h3>
                 <div className="space-y-2">
                   <Button
-                    variant={activeFilter === null ? 'default' : 'outline'}
+                    variant={activeCategory === null ? 'default' : 'outline'}
                     size="sm"
                     className="w-full justify-start"
-                    onClick={() => setActiveFilter(null)}
+                    onClick={() => setActiveCategory(null)}
                   >
                     All Meals
                   </Button>
+                  {/* Example categories, you may want to generate these dynamically */}
                   <Button
-                    variant={activeFilter === 'chicken' ? 'default' : 'outline'}
+                    variant={activeCategory === 'Bestseller' ? 'default' : 'outline'}
                     size="sm"
                     className="w-full justify-start"
-                    onClick={() => setActiveFilter('chicken')}
+                    onClick={() => setActiveCategory('Bestseller')}
                   >
-                    Chicken
+                    Bestseller
                   </Button>
                   <Button
-                    variant={activeFilter === 'beef' ? 'default' : 'outline'}
+                    variant={activeCategory === 'Plant-Based' ? 'default' : 'outline'}
                     size="sm"
                     className="w-full justify-start"
-                    onClick={() => setActiveFilter('beef')}
-                  >
-                    Beef
-                  </Button>
-                  <Button
-                    variant={activeFilter === 'plant' ? 'default' : 'outline'}
-                    size="sm"
-                    className="w-full justify-start"
-                    onClick={() => setActiveFilter('plant')}
+                    onClick={() => setActiveCategory('Plant-Based')}
                   >
                     Plant-Based
+                  </Button>
+                  <Button
+                    variant={activeCategory === 'High Calorie' ? 'default' : 'outline'}
+                    size="sm"
+                    className="w-full justify-start"
+                    onClick={() => setActiveCategory('High Calorie')}
+                  >
+                    High Calorie
+                  </Button>
+                  <Button
+                    variant={activeCategory === 'International' ? 'default' : 'outline'}
+                    size="sm"
+                    className="w-full justify-start"
+                    onClick={() => setActiveCategory('International')}
+                  >
+                    International
+                  </Button>
+                  <Button
+                    variant={activeCategory === 'Keto' ? 'default' : 'outline'}
+                    size="sm"
+                    className="w-full justify-start"
+                    onClick={() => setActiveCategory('Keto')}
+                  >
+                    Keto
+                  </Button>
+                  <Button
+                    variant={activeCategory === 'Spicy' ? 'default' : 'outline'}
+                    size="sm"
+                    className="w-full justify-start"
+                    onClick={() => setActiveCategory('Spicy')}
+                  >
+                    Spicy
                   </Button>
                 </div>
               </div>
@@ -81,11 +120,19 @@ const ProductsPage = () => {
 
           {/* Product Grid */}
           <div className="col-span-1 md:col-span-3">
-            {filteredProducts.length === 0 ? (
+            {isLoading ? (
+              <div className="flex justify-center items-center py-12">
+                <Spinner className="h-8 w-8" />
+              </div>
+            ) : fetchError ? (
+              <div className="text-center py-12 text-red-500">
+                Error loading products: {fetchError.message}
+              </div>
+            ) : filteredProducts.length === 0 ? (
               <div className="text-center py-12">
                 <h3 className="text-xl font-medium mb-2">No meals found</h3>
                 <p className="text-muted-foreground mb-4">Try changing your filters</p>
-                <Button variant="outline" onClick={() => setActiveFilter(null)}>
+                <Button variant="outline" onClick={() => setActiveCategory(null)}>
                   Clear Filters
                 </Button>
               </div>
@@ -103,13 +150,13 @@ const ProductsPage = () => {
   );
 };
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({ product }: { product: any }) => {
   return (
     <div className="product-card flex flex-col h-full">
       <Link href={`/products/${product.id}`} className="flex-grow">
         <div className="relative aspect-square overflow-hidden">
           <Image
-            src={product.image}
+            src={product.image || '/images/products/chicken-breast.png'}
             alt={product.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             fill
@@ -131,14 +178,6 @@ const ProductCard = ({ product }: { product: Product }) => {
               <p className="text-muted-foreground text-sm">{product.tagline}</p>
             </div>
             <span className="font-bold text-primary">${product.price}</span>
-          </div>
-          <div className="flex items-center text-sm text-muted-foreground">
-            <span className="bg-secondary rounded-full px-2 py-1 mr-2">
-              {product.nutrition.calories} cal
-            </span>
-            <span className="bg-secondary rounded-full px-2 py-1">
-              {product.nutrition.protein}g protein
-            </span>
           </div>
         </div>
       </Link>

@@ -12,6 +12,7 @@ import {
   TrendingUp,
   BarChart3,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 // Dummy data for the dashboard
 const dashboardData = {
@@ -62,6 +63,8 @@ const StatCard: React.FC<StatCardProps> = ({ title, value, change, icon, isNegat
 };
 
 export default function AdminDashboard() {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <main className="flex-1 container px-4 md:px-6 py-8">
@@ -69,7 +72,7 @@ export default function AdminDashboard() {
           <h1 className="text-3xl font-bold mb-4 md:mb-0">Admin Dashboard</h1>
           <div className="flex gap-2">
             <Button variant="outline">Generate Report</Button>
-            <Button>Add New Product</Button>
+            <Button onClick={() => router.push('/admin/cms')}>Edit Product List</Button>
           </div>
         </div>
 

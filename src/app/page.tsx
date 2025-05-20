@@ -4,6 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { products } from '@/data/products';
 import Image from 'next/image';
 import DebugToken from '@/components/common/debug-token';
+
 export default function Home() {
   const featuredProducts = products.filter(product => product.featured);
 

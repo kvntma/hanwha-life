@@ -35,8 +35,8 @@ An e-commerce platform for selling and delivering pre-made meals (chicken-based 
 ### Tasks:
 
 - [x] Integrate Clerk UI for sign-up, login, and session.
-- [ ] Connect Clerk to Supabase for session management.
-- [ ] Add Supabase role-based access control for admin users.
+- [x] Connect Clerk to Supabase for session management.
+- [x] Add Supabase role-based access control for admin users.
 - [ ] Secure protected routes in the CMS using Clerk + Supabase roles.
 
 ---
