@@ -152,8 +152,8 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16">
-        <div className="container px-4 md:px-6">
+      <section className="py-16 flex flex-col items-center w-full">
+        <div className="container px-4 md:px-6 w-full">
           <h2 className="text-3xl font-bold text-center mb-12">What The Homies Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 rounded-lg bg-card border border-border">
