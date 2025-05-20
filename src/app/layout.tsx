@@ -5,25 +5,28 @@ import { RootLayout } from '@/layouts/root/root-layout';
 import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '@/providers/query-provider';
 import { TooltipProvider } from '@/providers/tooltip-provider';
-
+import { ClerkProvider } from '@clerk/nextjs';
+import { dark } from '@clerk/themes';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Next.js Template',
-  description: 'A modern Next.js application template with Tailwind and shadcn/ui',
+  title: 'Bruh, Chicken',
+  description: 'Premium meal prep for the gains you deserve.',
 };
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <QueryProvider>
-          <TooltipProvider>
-            <RootLayout>{children}</RootLayout>
-            <Toaster />
-          </TooltipProvider>
-        </QueryProvider>
-      </body>
-    </html>
+    <ClerkProvider appearance={{ baseTheme: dark }}>
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+          <QueryProvider>
+            <TooltipProvider>
+              <RootLayout>{children}</RootLayout>
+              <Toaster />
+            </TooltipProvider>
+          </QueryProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

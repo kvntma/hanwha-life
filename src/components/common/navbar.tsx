@@ -1,10 +1,15 @@
 import { Button } from '@/components/ui/button';
-import { Menu, Search, ShoppingCart, X } from 'lucide-react';
+import { Menu, Search, ShoppingCart, X, UserCircle } from 'lucide-react';
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { AuthModal } from '@/components/auth/auth-modal';
+import { useIsAdmin } from '@/hooks/useIsAdmin';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const isAdmin = useIsAdmin();
 
   return (
     <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
@@ -29,6 +34,14 @@ const Navbar = () => {
           <Link href="/contact" className="text-foreground hover:text-primary transition-colors">
             Contact
           </Link>
+          {isAdmin && (
+            <Link
+              href="/admin"
+              className=" text-red-500 font-medium hover:text-green-400 transition-colors"
+            >
+              Admin
+            </Link>
+          )}
         </nav>
 
         {/* Desktop Actions */}
@@ -44,11 +57,21 @@ const Navbar = () => {
               </span>
             </Button>
           </Link>
-          <Link href="/login">
-            <Button variant="default" className="rounded-full">
+
+          {/* Authentication */}
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+          <SignedOut>
+            <Button
+              variant="default"
+              className="rounded-full gap-2"
+              onClick={() => setIsAuthModalOpen(true)}
+            >
+              <UserCircle className="h-5 w-5" />
               Sign In
             </Button>
-          </Link>
+          </SignedOut>
         </div>
 
         {/* Mobile Menu Button */}
@@ -95,11 +118,22 @@ const Navbar = () => {
               Contact
             </Link>
             <div className="flex items-center justify-between pt-2 border-t border-border">
-              <Link href="/login" onClick={() => setIsMenuOpen(false)}>
-                <Button variant="outline" size="sm" className="rounded-full">
+              <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+              </SignedIn>
+              <SignedOut>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="rounded-full"
+                  onClick={() => {
+                    setIsAuthModalOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                >
                   Sign In
                 </Button>
-              </Link>
+              </SignedOut>
               <Link href="/cart" onClick={() => setIsMenuOpen(false)}>
                 <Button
                   variant="default"
@@ -114,6 +148,9 @@ const Navbar = () => {
           </nav>
         </div>
       )}
+
+      {/* Auth Modal */}
+      <AuthModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
     </header>
   );
 };

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { products } from '@/data/products';
 import Image from 'next/image';
+import DebugToken from '@/components/common/debug-token';
 export default function Home() {
   const featuredProducts = products.filter(product => product.featured);
 
@@ -27,6 +28,7 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tighter mb-4 text-white">
             Fuel Up. <span className="text-primary">No Cap.</span>
           </h1>
+          <DebugToken />
           <p className="text-xl md:text-2xl text-gray-200 max-w-md md:max-w-lg mb-8">
             Premium meal prep for the gains you deserve. Chef-crafted, macro-perfect.
           </p>

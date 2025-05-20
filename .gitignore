@@ -47,3 +47,7 @@ next-env.d.ts
 /scripts/output/
 /scripts/temp/
 /scripts/*.log
+
+# supabase
+supabase/config.toml
+

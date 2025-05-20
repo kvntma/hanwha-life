@@ -8,3 +8,10 @@ export type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 export type Nullable<T> = T | null;
 
 export type Optional<T> = T | undefined;
+
+export type CustomJwtSessionClaims = {
+  fullName?: string;
+  primaryEmail?: string;
+  role?: string;
+  userId?: string;
+};

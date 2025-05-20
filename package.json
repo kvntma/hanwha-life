@@ -14,6 +14,8 @@
     "sync-prd": "node scripts/utils/prd-to-linear.js"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.19.4",
+    "@clerk/themes": "^2.2.45",
     "@hookform/resolvers": "^5.0.1",
     "@linear/sdk": "^40.0.0",
     "@radix-ui/react-avatar": "^1.1.7",
