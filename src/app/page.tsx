@@ -1,16 +1,13 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import { products } from '@/data/products';
 import Image from 'next/image';
 import DebugToken from '@/components/common/debug-token';
+import { FeaturedProducts } from './components/FeaturedProducts';
 
 export default function Home() {
-  const featuredProducts = products.filter(product => product.featured);
-
   return (
-    <div className="space-y-8 w-full">
-      <section className="relative h-[80vh] flex items-center justify-center">
+    <div className="space-y-8 w-full flex flex-col items-center">
+      <section className="relative h-[60vh] w-full flex items-center justify-center">
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?q=80&w=2069&auto=format&fit=crop"
@@ -133,56 +130,10 @@ export default function Home() {
       </section>
 
       {/* Featured Products */}
-      <section className="py-16">
-        <div className="container px-4 md:px-6">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-3xl font-bold">Popular Meals</h2>
-            <Link href="/products" className="text-primary flex items-center group">
-              View All
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredProducts.map(product => (
-              <Link href={`/product/${product.id}`} key={product.id} className="product-card group">
-                <div className="relative aspect-square overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full">
-                      {product.category}
-                    </span>
-                  </div>
-                </div>
-                <div className="p-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h3 className="font-bold text-lg">{product.name}</h3>
-                      <p className="text-muted-foreground text-sm">{product.tagline}</p>
-                    </div>
-                    <span className="font-bold text-primary">${product.price}</span>
-                  </div>
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <span className="bg-secondary rounded-full px-2 py-1 mr-2">
-                      {product.nutrition.calories} cal
-                    </span>
-                    <span className="bg-secondary rounded-full px-2 py-1">
-                      {product.nutrition.protein}g protein
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <FeaturedProducts />
 
       {/* CTA Section */}
-      <section className="py-16 bg-primary text-primary-foreground">
+      <section className="py-16 bg-primary text-primary-foreground w-full">
         <div className="container px-4 md:px-6 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Fuel Your Gains?</h2>
           <p className="text-xl max-w-2xl mx-auto mb-8">

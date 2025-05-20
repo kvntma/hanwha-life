@@ -1,12 +1,42 @@
-import { products } from '@/data/products';
+export const dynamic = 'force-dynamic';
+
 import { Button } from '@/components/ui/button';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { getProduct } from '@/lib/supabase/server/products';
+import { Metadata } from 'next';
 
-export default function ProductPage({ params }: { params: { id: string } }) {
-  const product = products.find(p => p.id === params.id);
+type Props = {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const product = await getProduct(id);
+
+  if (!product) {
+    return {
+      title: 'Product Not Found',
+    };
+  }
+
+  return {
+    title: `${product.name} | Bruh, Chicken`,
+    description: product.description,
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      images: [product.image],
+    },
+  };
+}
+
+export default async function ProductPage({ params }: Props) {
+  const { id } = await params;
+  const product = await getProduct(id);
 
   if (!product) {
     notFound();
@@ -52,7 +82,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
 
           <p className="text-lg">{product.description}</p>
 
-          <div className="grid grid-cols-2 gap-4 p-6 bg-card rounded-lg">
+          <div className="grid gap-4 p-6 bg-card rounded-lg">
             <div>
               <h3 className="font-semibold mb-2">Nutrition Facts</h3>
               <div className="space-y-2">
@@ -72,15 +102,8 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                   <span>Fat</span>
                   <span className="font-medium">{product.nutrition.fat}g</span>
                 </div>
-              </div>
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2">Details</h3>
+              </div>{' '}
               <div className="space-y-2">
-                <div className="flex justify-between">
-                  <span>Protein Type</span>
-                  <span className="font-medium capitalize">{product.proteinType}</span>
-                </div>
                 <div className="flex justify-between">
                   <span>Weight</span>
                   <span className="font-medium">{product.weight}</span>

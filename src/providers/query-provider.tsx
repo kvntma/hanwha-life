@@ -2,8 +2,17 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useState, type ReactNode } from 'react';
+import { Product } from '@/types/product';
 
-export function QueryProvider({ children }: { children: ReactNode }) {
+interface QueryProviderProps {
+  children: ReactNode;
+  initialData?: {
+    products?: Product[];
+    featuredProducts?: Product[];
+  };
+}
+
+export function QueryProvider({ children, initialData }: QueryProviderProps) {
   const [queryClient] = useState(
     () =>
       new QueryClient({
@@ -15,6 +24,14 @@ export function QueryProvider({ children }: { children: ReactNode }) {
         },
       })
   );
+
+  // Set initial data if provided
+  if (initialData?.products) {
+    queryClient.setQueryData(['products'], initialData.products);
+  }
+  if (initialData?.featuredProducts) {
+    queryClient.setQueryData(['products', 'featured'], initialData.featuredProducts);
+  }
 
   return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
 }
