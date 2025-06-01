@@ -308,45 +308,6 @@ async function createIssue(title, description, teamId, sectionName, labelMap) {
   }
 }
 
-async function syncLinearToPRD() {
-  try {
-    console.log('\nSyncing Linear issues to PRD...');
-    const prdPath = resolve(process.cwd(), 'PRD.md');
-    let prdContent = fs.readFileSync(prdPath, 'utf-8');
-
-    // Get all issues from Linear
-    const issues = await linearClient.issues({
-      filter: { team: { id: { eq: TEAM_ID } } },
-    });
-
-    // Update PRD checkboxes based on Linear status
-    for (const issue of issues.nodes) {
-      const taskPattern = new RegExp(
-        `- \\[ \\] ${issue.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`,
-        'g'
-      );
-      const checkedPattern = new RegExp(
-        `- \\[x\\] ${issue.title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`,
-        'g'
-      );
-
-      if (issue.state.type === 'completed') {
-        // If issue is completed, ensure checkbox is checked
-        prdContent = prdContent.replace(taskPattern, `- [x] ${issue.title}`);
-      } else {
-        // If issue is not completed, ensure checkbox is unchecked
-        prdContent = prdContent.replace(checkedPattern, `- [ ] ${issue.title}`);
-      }
-    }
-
-    // Write updated content back to PRD
-    fs.writeFileSync(prdPath, prdContent);
-    console.log('✅ PRD updated with Linear status');
-  } catch (error) {
-    console.error('Error syncing Linear to PRD:', error);
-  }
-}
-
 async function syncPRDToLinear() {
   try {
     console.log('\nSyncing PRD to Linear...');
@@ -360,12 +321,12 @@ async function syncPRDToLinear() {
     const existingTitles = new Set(existingIssues.nodes.map(issue => issue.title));
 
     // First try the standard format
-    let sections = [...prdContent.matchAll(/## (.*?)\n\n### Tasks:\n\n((?:- \[ \] .+\n)+)/g)];
+    let sections = [...prdContent.matchAll(/## (.*?)\n\n### Tasks:\n\n((?:- \[( |x)\] .+\n)+)/g)];
 
     // If no sections are found with the standard format, try an alternative format
     // that might exist in the PRD (without the ### Tasks: header)
     if (sections.length === 0) {
-      sections = [...prdContent.matchAll(/## (.*?)\n\n((?:- \[ \] .+\n)+)/g)];
+      sections = [...prdContent.matchAll(/## (.*?)\n\n((?:- \[( |x)\] .+\n)+)/g)];
     }
 
     console.log(`Found ${sections.length} sections with tasks`);
@@ -399,14 +360,13 @@ async function syncPRDToLinear() {
 
       console.log(`Section '${section}' mapped to category: '${category}'`);
 
-      // Extract tasks from the block
-      const tasks = [...block.matchAll(/- \[ \] (.+)/g)].map(m => m[1]);
+      // Extract tasks from the block - now including both checked and unchecked tasks
+      const tasks = [...block.matchAll(/- \[( |x)\] (.+)/g)].map(m => m[2]);
 
       console.log(`Found ${tasks.length} tasks in section ${cleanSection} (category: ${category})`);
 
       // Create issues sequentially to avoid race conditions
       for (const task of tasks) {
-        // Only create issue if it doesn't already exist
         if (!existingTitles.has(task)) {
           await createIssue(
             task,
@@ -430,12 +390,9 @@ async function syncPRDToLinear() {
 
 async function main() {
   try {
-    console.log('Starting bi-directional sync...');
+    console.log('Starting sync...');
 
-    // First sync Linear to PRD to update checkboxes
-    await syncLinearToPRD();
-
-    // Then sync PRD to Linear to create new issues
+    // Only sync PRD to Linear to create new issues and assign labels
     await syncPRDToLinear();
 
     console.log('\nSync completed successfully!');

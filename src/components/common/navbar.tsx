@@ -117,6 +117,15 @@ const Navbar = () => {
             >
               Contact
             </Link>
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className="text-red-500 font-medium hover:text-green-400 transition-colors py-2"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Admin
+              </Link>
+            )}
             <div className="flex items-center justify-between pt-2 border-t border-border">
               <SignedIn>
                 <UserButton afterSignOutUrl="/" />

@@ -11,7 +11,8 @@
     "format": "biome format --write .",
     "format:check": "biome format --check .",
     "script:prd-to-linear": "ts-node scripts/utils/prd-to-linear.js",
-    "sync-prd": "node scripts/utils/prd-to-linear.js"
+    "sync-prd": "node scripts/utils/prd-to-linear.js",
+    "sync-tasks": "node scripts/utils/task-sync.js"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.19.4",

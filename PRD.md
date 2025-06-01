@@ -37,7 +37,7 @@ An e-commerce platform for selling and delivering pre-made meals (chicken-based 
 - [x] Integrate Clerk UI for sign-up, login, and session.
 - [x] Connect Clerk to Supabase for session management.
 - [x] Add Supabase role-based access control for admin users.
-- [ ] Secure protected routes in the CMS using Clerk + Supabase roles.
+- [x] Secure protected routes in the CMS using Clerk + Supabase roles.
 
 ---
 
@@ -46,10 +46,10 @@ An e-commerce platform for selling and delivering pre-made meals (chicken-based 
 ### Tasks:
 
 - [x] Create Supabase `products` table with fields: `id`, `name`, `description`, `price`, `inventory_count`, `stripe_product_id`, `available`.
-- [ ] Build CMS UI form to add/edit/delete products.
+- [x] Build CMS UI form to add/edit/delete products.
 - [ ] Create Stripe product + pricing via API on Supabase insert.
 - [ ] Store returned Stripe product ID into Supabase.
-- [ ] Use React Query to fetch `products` for frontend display.
+- [x] Use React Query to fetch `products` for frontend display.
 - [ ] Display inventory status and decrement after purchase.
 
 ---

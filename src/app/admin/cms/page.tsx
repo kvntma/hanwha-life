@@ -25,12 +25,16 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import DebugToken from '@/components/common/debug-token';
+import { useUser } from '@clerk/nextjs';
 
 export default function AdminProductsPage() {
+  const { user } = useUser();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const queryClient = useQueryClient();
   const productsApi = useProducts();
+
+  console.log(user);
 
   // Fetch products
   const {
@@ -51,7 +55,9 @@ export default function AdminProductsPage() {
       toast.success('Product created successfully');
     },
     onError: (error: any) => {
-      toast.error(error.message || 'Failed to create product. Are you an admin?');
+      toast.error(
+        `${error.message} Failed to add` || 'Failed to create product. Are you an admin?'
+      );
     },
   });
 
