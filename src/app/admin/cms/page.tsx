@@ -24,15 +24,24 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import DebugToken from '@/components/common/debug-token';
 import { useUser } from '@clerk/nextjs';
 
 export default function AdminProductsPage() {
   const { user } = useUser();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [productToDelete, setProductToDelete] = useState<Product | null>(null);
   const queryClient = useQueryClient();
   const productsApi = useProducts();
+
+  const categories = [
+    'Supplements',
+    'Protein',
+    'Vitamins',
+    'Sports Nutrition',
+    'Weight Management',
+    'Health & Wellness',
+  ];
 
   console.log(user);
 
@@ -80,6 +89,7 @@ export default function AdminProductsPage() {
     mutationFn: productsApi.deleteProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
+      setProductToDelete(null);
       toast.success('Product deleted successfully');
     },
     onError: (error: any) => {
@@ -101,6 +111,8 @@ export default function AdminProductsPage() {
       weight: formData.get('weight') as string,
       featured: formData.get('featured') === 'true',
       category: formData.get('category') as string,
+      image: formData.get('image') as string,
+      stripe_product_id: null,
       nutrition: formData.get('calories')
         ? {
             calories: parseInt(formData.get('calories') as string),
@@ -132,7 +144,6 @@ export default function AdminProductsPage() {
   return (
     <div className="container mx-auto py-10">
       <div className="flex justify-between items-center mb-6">
-        <DebugToken />
         <h1 className="text-2xl font-bold">Product Management</h1>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
           <DialogTrigger asChild>
@@ -176,8 +187,12 @@ export default function AdminProductsPage() {
                 </select>
               </div>
               <div>
+                <Label htmlFor="image">Image URL</Label>
+                <Input id="image" name="image" type="url" required />
+              </div>
+              <div>
                 <Label htmlFor="weight">Weight</Label>
-                <Input id="weight" name="weight" required />
+                <Input id="weight" name="weight" defaultValue="10 oz" required />
               </div>
               <div>
                 <Label htmlFor="featured">Featured</Label>
@@ -193,26 +208,37 @@ export default function AdminProductsPage() {
               </div>
               <div>
                 <Label htmlFor="category">Category</Label>
-                <Input id="category" name="category" required />
+                <select
+                  id="category"
+                  name="category"
+                  className="w-full p-2 border rounded"
+                  required
+                >
+                  {categories.map(category => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="space-y-4">
                 <h3 className="font-medium">Nutrition Information (Optional)</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <Label htmlFor="calories">Calories</Label>
-                    <Input id="calories" name="calories" type="number" />
+                    <Input id="calories" name="calories" type="number" defaultValue="150" />
                   </div>
                   <div>
                     <Label htmlFor="protein">Protein (g)</Label>
-                    <Input id="protein" name="protein" type="number" />
+                    <Input id="protein" name="protein" type="number" defaultValue="20" />
                   </div>
                   <div>
                     <Label htmlFor="carbs">Carbs (g)</Label>
-                    <Input id="carbs" name="carbs" type="number" />
+                    <Input id="carbs" name="carbs" type="number" defaultValue="5" />
                   </div>
                   <div>
                     <Label htmlFor="fat">Fat (g)</Label>
-                    <Input id="fat" name="fat" type="number" />
+                    <Input id="fat" name="fat" type="number" defaultValue="3" />
                   </div>
                 </div>
               </div>
@@ -225,29 +251,33 @@ export default function AdminProductsPage() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
+            <TableHead className="w-[40%] md:w-auto">Name</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Inventory</TableHead>
-            <TableHead>Status</TableHead>
+            <TableHead className="hidden md:table-cell">Status</TableHead>
             <TableHead>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {products?.map(product => (
             <TableRow key={product.id}>
-              <TableCell>{product.name}</TableCell>
+              <TableCell className="max-w-[150px] md:max-w-none break-words">
+                {product.name}
+              </TableCell>
               <TableCell>${product.price.toFixed(2)}</TableCell>
               <TableCell>{product.inventory_count}</TableCell>
-              <TableCell>{product.available ? 'Available' : 'Unavailable'}</TableCell>
+              <TableCell className="hidden md:table-cell">
+                {product.available ? 'Available' : 'Unavailable'}
+              </TableCell>
               <TableCell>
-                <div className="space-x-2">
+                <div className="flex flex-col md:flex-row gap-2">
                   <Button variant="outline" size="sm" onClick={() => setEditingProduct(product)}>
                     Edit
                   </Button>
                   <Button
                     variant="destructive"
                     size="sm"
-                    onClick={() => deleteProduct.mutate(product.id)}
+                    onClick={() => setProductToDelete(product)}
                   >
                     Delete
                   </Button>
@@ -257,6 +287,30 @@ export default function AdminProductsPage() {
           ))}
         </TableBody>
       </Table>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={!!productToDelete} onOpenChange={() => setProductToDelete(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete Product</DialogTitle>
+          </DialogHeader>
+          <div className="py-4">
+            <p>Are you sure you want to delete "{productToDelete?.name}"?</p>
+            <p className="text-sm text-muted-foreground mt-2">This action cannot be undone.</p>
+          </div>
+          <div className="flex justify-end gap-3">
+            <Button variant="outline" onClick={() => setProductToDelete(null)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={() => productToDelete && deleteProduct.mutate(productToDelete.id)}
+            >
+              Delete
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Edit Dialog */}
       <Dialog open={!!editingProduct} onOpenChange={() => setEditingProduct(null)}>
@@ -323,6 +377,16 @@ export default function AdminProductsPage() {
                 </select>
               </div>
               <div>
+                <Label htmlFor="edit-image">Image URL</Label>
+                <Input
+                  id="edit-image"
+                  name="image"
+                  type="url"
+                  defaultValue={editingProduct.image || ''}
+                  required
+                />
+              </div>
+              <div>
                 <Label htmlFor="edit-weight">Weight</Label>
                 <Input
                   id="edit-weight"
@@ -346,12 +410,19 @@ export default function AdminProductsPage() {
               </div>
               <div>
                 <Label htmlFor="edit-category">Category</Label>
-                <Input
+                <select
                   id="edit-category"
                   name="category"
+                  className="w-full p-2 border rounded"
                   defaultValue={editingProduct.category || ''}
                   required
-                />
+                >
+                  {categories.map(category => (
+                    <option key={category} value={category}>
+                      {category}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="space-y-4">
                 <h3 className="font-medium">Nutrition Information (Optional)</h3>
@@ -394,7 +465,16 @@ export default function AdminProductsPage() {
                   </div>
                 </div>
               </div>
-              <Button type="submit">Update Product</Button>
+              <div className="flex justify-between">
+                <Button type="submit">Update Product</Button>
+                <Button
+                  type="button"
+                  variant="destructive"
+                  onClick={() => setProductToDelete(editingProduct)}
+                >
+                  Delete Product
+                </Button>
+              </div>
             </form>
           )}
         </DialogContent>

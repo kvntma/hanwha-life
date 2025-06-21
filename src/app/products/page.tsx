@@ -13,11 +13,7 @@ const ProductsPage = () => {
   const [showFilters, setShowFilters] = useState(false);
   const productsApi = useProducts();
 
-  const {
-    data: products,
-    isLoading,
-    error: fetchError,
-  } = useQuery({
+  const { data: products, error: fetchError } = useQuery({
     queryKey: ['products'],
     queryFn: productsApi.getProducts,
     // Use stale time of 5 minutes since products don't change often
@@ -26,8 +22,8 @@ const ProductsPage = () => {
 
   const filteredProducts = products
     ? activeCategory
-      ? products.filter(product => product.category === activeCategory)
-      : products
+      ? products.filter(product => product.category === activeCategory && product.available)
+      : products.filter(product => product.available)
     : [];
 
   if (fetchError) {
