@@ -11,8 +11,8 @@ import { AddToCartButton } from '../components/AddToCartButton';
 import { ProductCard } from '../components/ProductCard';
 
 type Props = {
-  params: { id: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
