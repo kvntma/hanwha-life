@@ -24,13 +24,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { useUser } from '@clerk/nextjs';
 
 export default function AdminProductsPage() {
-  const { user } = useUser();
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const [deleteConfirmation, setDeleteConfirmation] = useState('');
   const queryClient = useQueryClient();
   const productsApi = useProducts();
 
@@ -42,8 +41,6 @@ export default function AdminProductsPage() {
     'Weight Management',
     'Health & Wellness',
   ];
-
-  console.log(user);
 
   // Fetch products
   const {
@@ -97,9 +94,25 @@ export default function AdminProductsPage() {
     },
   });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
+    const file = formData.get('imageFile') as File;
+    let imageUrl = formData.get('image') as string;
+
+    if (file && file.size > 0) {
+      setIsUploading(true);
+      try {
+        imageUrl = await productsApi.uploadImage(file);
+      } catch (error: any) {
+        toast.error('Failed to upload image: ' + error.message);
+        setIsUploading(false);
+        return;
+      }
+      setIsUploading(false);
+    }
 
     const productData = {
       name: formData.get('name') as string,
@@ -111,16 +124,9 @@ export default function AdminProductsPage() {
       weight: formData.get('weight') as string,
       featured: formData.get('featured') === 'true',
       category: formData.get('category') as string,
-      image: formData.get('image') as string,
-      stripe_product_id: null,
-      nutrition: formData.get('calories')
-        ? {
-            calories: parseInt(formData.get('calories') as string),
-            protein: parseInt(formData.get('protein') as string),
-            carbs: parseInt(formData.get('carbs') as string),
-            fat: parseInt(formData.get('fat') as string),
-          }
-        : undefined,
+      image: imageUrl,
+      strength_mg: parseInt(formData.get('strength_mg') as string),
+      flavor_profile: formData.get('flavor_profile') as string,
     };
 
     if (editingProduct) {
@@ -142,7 +148,7 @@ export default function AdminProductsPage() {
   }
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-8 px-4 dark:text-white">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Product Management</h1>
         <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
@@ -153,12 +159,12 @@ export default function AdminProductsPage() {
             <DialogHeader>
               <DialogTitle>Add New Product</DialogTitle>
             </DialogHeader>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div>
+            <form onSubmit={handleSubmit} className="space-y-4 dark:text-white">
+              <div className="dark:text-white">
                 <Label htmlFor="name">Name</Label>
                 <Input id="name" name="name" required />
               </div>
-              <div>
+              <div className="dark:text-white">
                 <Label htmlFor="tagline">Tagline</Label>
                 <Input id="tagline" name="tagline" required />
               </div>
@@ -179,16 +185,21 @@ export default function AdminProductsPage() {
                 <select
                   id="available"
                   name="available"
-                  className="w-full p-2 border rounded"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 >
                   <option value="true">Yes</option>
                   <option value="false">No</option>
                 </select>
               </div>
-              <div>
-                <Label htmlFor="image">Image URL</Label>
-                <Input id="image" name="image" type="url" required />
+              <div className="space-y-2">
+                <Label htmlFor="image">Image Source</Label>
+                <Input id="image" name="image" type="url" placeholder="Paste an external URL..." />
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground uppercase font-bold">Or Upload</span>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <Input id="imageFile" name="imageFile" type="file" accept="image/*" />
               </div>
               <div>
                 <Label htmlFor="weight">Weight</Label>
@@ -199,7 +210,7 @@ export default function AdminProductsPage() {
                 <select
                   id="featured"
                   name="featured"
-                  className="w-full p-2 border rounded"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 >
                   <option value="true">Yes</option>
@@ -211,7 +222,7 @@ export default function AdminProductsPage() {
                 <select
                   id="category"
                   name="category"
-                  className="w-full p-2 border rounded"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   required
                 >
                   {categories.map(category => (
@@ -222,27 +233,21 @@ export default function AdminProductsPage() {
                 </select>
               </div>
               <div className="space-y-4">
-                <h3 className="font-medium">Nutrition Information (Optional)</h3>
+                <h3 className="font-medium">Tin Specifications</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="calories">Calories</Label>
-                    <Input id="calories" name="calories" type="number" defaultValue="150" />
+                    <Label htmlFor="strength_mg">Strength (mg)</Label>
+                    <Input id="strength_mg" name="strength_mg" type="number" defaultValue="16" />
                   </div>
                   <div>
-                    <Label htmlFor="protein">Protein (g)</Label>
-                    <Input id="protein" name="protein" type="number" defaultValue="20" />
-                  </div>
-                  <div>
-                    <Label htmlFor="carbs">Carbs (g)</Label>
-                    <Input id="carbs" name="carbs" type="number" defaultValue="5" />
-                  </div>
-                  <div>
-                    <Label htmlFor="fat">Fat (g)</Label>
-                    <Input id="fat" name="fat" type="number" defaultValue="3" />
+                    <Label htmlFor="flavor_profile">Flavor Profile</Label>
+                    <Input id="flavor_profile" name="flavor_profile" placeholder="e.g. Arctic / Bold" />
                   </div>
                 </div>
               </div>
-              <Button type="submit">Save Product</Button>
+              <Button type="submit" disabled={isUploading || addProduct.isPending}>
+                {isUploading ? 'Uploading Image...' : addProduct.isPending ? 'Saving...' : 'Save Product'}
+              </Button>
             </form>
           </DialogContent>
         </Dialog>
@@ -251,22 +256,22 @@ export default function AdminProductsPage() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[40%] md:w-auto">Name</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>Inventory</TableHead>
-            <TableHead className="hidden md:table-cell">Status</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="dark:text-white w-[40%] md:w-auto">Name</TableHead>
+            <TableHead className="dark:text-white">Price</TableHead>
+            <TableHead className="dark:text-white">Inventory</TableHead>
+            <TableHead className="dark:text-white hidden md:table-cell">Status</TableHead>
+            <TableHead className="dark:text-white">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {products?.map(product => (
             <TableRow key={product.id}>
-              <TableCell className="max-w-[150px] md:max-w-none break-words">
+              <TableCell className="dark:text-white max-w-[150px] md:max-w-none break-words">
                 {product.name}
               </TableCell>
-              <TableCell>${product.price.toFixed(2)}</TableCell>
-              <TableCell>{product.inventory_count}</TableCell>
-              <TableCell className="hidden md:table-cell">
+              <TableCell className="dark:text-white">${product.price.toFixed(2)}</TableCell>
+              <TableCell className="text-black dark:text-white">{product.inventory_count}</TableCell>
+              <TableCell className="dark:text-white hidden md:table-cell">
                 {product.available ? 'Available' : 'Unavailable'}
               </TableCell>
               <TableCell>
@@ -289,22 +294,48 @@ export default function AdminProductsPage() {
       </Table>
 
       {/* Delete Confirmation Dialog */}
-      <Dialog open={!!productToDelete} onOpenChange={() => setProductToDelete(null)}>
+      <Dialog open={!!productToDelete} onOpenChange={() => {
+        setProductToDelete(null);
+        setDeleteConfirmation('');
+      }}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Delete Product</DialogTitle>
           </DialogHeader>
-          <div className="py-4">
-            <p>Are you sure you want to delete "{productToDelete?.name}"?</p>
-            <p className="text-sm text-muted-foreground mt-2">This action cannot be undone.</p>
+          <div className="py-4 space-y-4">
+            <div>
+              <p>Are you sure you want to delete "{productToDelete?.name}"?</p>
+              <p className="text-sm text-muted-foreground mt-2">This action cannot be undone.</p>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="delete-confirm" className="text-sm font-medium">
+                Type <span className="font-bold text-destructive">{productToDelete?.name}</span> to confirm:
+              </Label>
+              <Input
+                id="delete-confirm"
+                value={deleteConfirmation}
+                onChange={(e) => setDeleteConfirmation(e.target.value)}
+                placeholder="Enter product name"
+                className="font-mono"
+              />
+            </div>
           </div>
           <div className="flex justify-end gap-3">
-            <Button variant="outline" onClick={() => setProductToDelete(null)}>
+            <Button variant="outline" onClick={() => {
+              setProductToDelete(null);
+              setDeleteConfirmation('');
+            }}>
               Cancel
             </Button>
             <Button
               variant="destructive"
-              onClick={() => productToDelete && deleteProduct.mutate(productToDelete.id)}
+              disabled={deleteConfirmation !== productToDelete?.name}
+              onClick={() => {
+                if (productToDelete && deleteConfirmation === productToDelete.name) {
+                  deleteProduct.mutate(productToDelete.id);
+                  setDeleteConfirmation('');
+                }
+              }}
             >
               Delete
             </Button>
@@ -368,7 +399,7 @@ export default function AdminProductsPage() {
                 <select
                   id="edit-available"
                   name="available"
-                  className="w-full p-2 border rounded"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   defaultValue={editingProduct.available.toString()}
                   required
                 >
@@ -376,15 +407,20 @@ export default function AdminProductsPage() {
                   <option value="false">No</option>
                 </select>
               </div>
-              <div>
-                <Label htmlFor="edit-image">Image URL</Label>
+              <div className="space-y-2">
+                <Label htmlFor="edit-image">Image Source</Label>
                 <Input
                   id="edit-image"
                   name="image"
                   type="url"
                   defaultValue={editingProduct.image || ''}
-                  required
+                  placeholder="Paste an external URL..."
                 />
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-muted-foreground uppercase font-bold">Or Replace With Upload</span>
+                  <div className="h-px flex-1 bg-border" />
+                </div>
+                <Input id="edit-imageFile" name="imageFile" type="file" accept="image/*" />
               </div>
               <div>
                 <Label htmlFor="edit-weight">Weight</Label>
@@ -400,7 +436,7 @@ export default function AdminProductsPage() {
                 <select
                   id="edit-featured"
                   name="featured"
-                  className="w-full p-2 border rounded"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   defaultValue={editingProduct.featured.toString()}
                   required
                 >
@@ -413,7 +449,7 @@ export default function AdminProductsPage() {
                 <select
                   id="edit-category"
                   name="category"
-                  className="w-full p-2 border rounded"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   defaultValue={editingProduct.category || ''}
                   required
                 >
@@ -425,48 +461,31 @@ export default function AdminProductsPage() {
                 </select>
               </div>
               <div className="space-y-4">
-                <h3 className="font-medium">Nutrition Information (Optional)</h3>
+                <h3 className="font-medium">Tin Specifications</h3>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <Label htmlFor="edit-calories">Calories</Label>
+                    <Label htmlFor="edit-strength_mg">Strength (mg)</Label>
                     <Input
-                      id="edit-calories"
-                      name="calories"
+                      id="edit-strength_mg"
+                      name="strength_mg"
                       type="number"
-                      defaultValue={editingProduct.nutrition?.calories}
+                      defaultValue={editingProduct.strength_mg}
                     />
                   </div>
                   <div>
-                    <Label htmlFor="edit-protein">Protein (g)</Label>
+                    <Label htmlFor="edit-flavor_profile">Flavor Profile</Label>
                     <Input
-                      id="edit-protein"
-                      name="protein"
-                      type="number"
-                      defaultValue={editingProduct.nutrition?.protein}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="edit-carbs">Carbs (g)</Label>
-                    <Input
-                      id="edit-carbs"
-                      name="carbs"
-                      type="number"
-                      defaultValue={editingProduct.nutrition?.carbs}
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="edit-fat">Fat (g)</Label>
-                    <Input
-                      id="edit-fat"
-                      name="fat"
-                      type="number"
-                      defaultValue={editingProduct.nutrition?.fat}
+                      id="edit-flavor_profile"
+                      name="flavor_profile"
+                      defaultValue={editingProduct.flavor_profile}
                     />
                   </div>
                 </div>
               </div>
               <div className="flex justify-between">
-                <Button type="submit">Update Product</Button>
+                <Button type="submit" disabled={isUploading || updateProduct.isPending}>
+                  {isUploading ? 'Uploading Image...' : updateProduct.isPending ? 'Updating...' : 'Update Product'}
+                </Button>
                 <Button
                   type="button"
                   variant="destructive"

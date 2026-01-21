@@ -29,7 +29,9 @@ export function FeaturedProducts() {
     <section className="py-16 w-full flex justify-center">
       <div className="container px-4 md:px-6">
         <div className="flex justify-between items-center mb-8">
-          <h2 className="text-3xl font-bold">Featured Meals</h2>
+          <h2 className="text-3xl font-black uppercase italic tracking-tighter">
+            The <span className="text-primary">Beast</span> Collection
+          </h2>
           <Button variant="ghost" asChild>
             <Link href="/products">
               View All <ArrowRight className="ml-2 h-4 w-4" />
@@ -49,8 +51,8 @@ export function FeaturedProducts() {
           </div>
         ) : featuredProducts?.length === 0 ? (
           <div className="text-center py-12">
-            <h3 className="text-xl font-medium mb-2">No featured meals available</h3>
-            <p className="text-muted-foreground mb-4">Check back later for new featured meals</p>
+            <h3 className="text-2xl font-black uppercase italic tracking-tighter mb-2">Vault Sealed</h3>
+            <p className="text-muted-foreground mb-4 font-medium uppercase text-xs tracking-widest">No featured drops in the queue. Stand by.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -60,6 +62,6 @@ export function FeaturedProducts() {
           </div>
         )}
       </div>
-    </section>
+    </section >
   );
 }

@@ -1,59 +1,50 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Poppins } from 'next/font/google';
 import './globals.css';
 import { RootLayout } from '@/layouts/root/root-layout';
 import { Toaster } from '@/components/ui/sonner';
 import { QueryProvider } from '@/providers/query-provider';
 import { TooltipProvider } from '@/providers/tooltip-provider';
-import { ClerkProvider } from '@clerk/nextjs';
-import { dark } from '@clerk/themes';
+import { AuthProvider } from '@/providers/auth-provider';
 import { getFeaturedProducts } from '@/lib/supabase/server/products';
+import { CartProvider } from '@/providers/cart-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
 
-const inter = Inter({ subsets: ['latin'] });
+const poppins = Poppins({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  variable: '--font-poppins',
+});
 
 export const metadata: Metadata = {
-  title: 'Bruh, Chicken | Premium Meal Prep for Fitness Goals',
+  title: 'Beast Tins | Premium Nicotine Drops & Pouches',
   description:
-    'Premium meal prep service offering chef-crafted, macro-perfect meals. Perfect for fitness enthusiasts, athletes, and anyone looking for healthy, convenient meals.',
+    'The ultimate source for premium nicotine drops. Beast Tins offers curated, high-strength flavors for those who demand the best.',
   keywords:
-    'meal prep, fitness meals, healthy food delivery, macro meals, protein meals, meal delivery service',
+    'nicotine drops, Beast Tins, premium pouches, black thunder, arctic mint, iridescent smoke',
   openGraph: {
-    title: 'Bruh, Chicken | Premium Meal Prep for Fitness Goals',
+    title: 'Beast Tins | Premium Nicotine Drops & Pouches',
     description:
-      'Premium meal prep service offering chef-crafted, macro-perfect meals. Perfect for fitness enthusiasts, athletes, and anyone looking for healthy, convenient meals.',
+      'The ultimate source for premium nicotine drops. Beast Tins offers curated, high-strength flavors for those who demand the best.',
     type: 'website',
     locale: 'en_US',
     images: [
       {
-        url: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?q=80&w=2069&auto=format&fit=crop',
-        width: 2069,
-        height: 1379,
-        alt: 'Premium grilled chicken meal prep',
+        url: 'https://pouchpal-store.lovable.app/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Beast Tins Premium Collection',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Bruh, Chicken | Premium Meal Prep for Fitness Goals',
+    title: 'Beast Tins | Premium Nicotine Drops & Pouches',
     description:
-      'Premium meal prep service offering chef-crafted, macro-perfect meals. Perfect for fitness enthusiasts, athletes, and anyone looking for healthy, convenient meals.',
+      'The ultimate source for premium nicotine drops. Beast Tins offers curated, high-strength flavors for those who demand the best.',
     images: [
-      'https://images.unsplash.com/photo-1532550907401-a500c9a57435?q=80&w=2069&auto=format&fit=crop',
+      'https://pouchpal-store.lovable.app/og-image.png',
     ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'your-google-site-verification', // Add your Google Search Console verification code
   },
 };
 
@@ -63,21 +54,25 @@ export default async function Layout({ children }: { children: React.ReactNode }
   const featuredProducts = await getFeaturedProducts();
 
   return (
-    <ClerkProvider appearance={{ baseTheme: dark }}>
-      <html lang="en" suppressHydrationWarning>
-        <body className={inter.className}>
-          <QueryProvider
-            initialData={{
-              featuredProducts,
-            }}
-          >
-            <TooltipProvider>
-              <RootLayout>{children}</RootLayout>
-              <Toaster />
-            </TooltipProvider>
-          </QueryProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${poppins.variable} font-sans`}>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AuthProvider>
+            <QueryProvider
+              initialData={{
+                featuredProducts,
+              }}
+            >
+              <TooltipProvider>
+                <CartProvider>
+                  <RootLayout>{children}</RootLayout>
+                  <Toaster />
+                </CartProvider>
+              </TooltipProvider>
+            </QueryProvider>
+          </AuthProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }

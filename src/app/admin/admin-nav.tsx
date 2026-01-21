@@ -3,6 +3,8 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
+import { NotificationBell } from '@/components/NotificationBell';
+
 
 interface NavigationItem {
   name: string;
@@ -22,7 +24,7 @@ export function AdminNav({ navigation }: AdminNavProps) {
         <div className="flex h-16 justify-between">
           <div className="flex">
             <div className="flex flex-shrink-0 items-center">
-              <span className="text-xl font-bold">Admin Dashboard</span>
+              <span className="text-xl font-bold text-black">Admin Dashboard</span>
             </div>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
               {navigation.map(item => (
@@ -40,6 +42,9 @@ export function AdminNav({ navigation }: AdminNavProps) {
                 </Link>
               ))}
             </div>
+          </div>
+          <div className="flex items-center">
+            <NotificationBell />
           </div>
         </div>
       </div>

@@ -22,58 +22,34 @@ export const ProductFilters = ({
             <Button
               variant={activeCategory === null ? 'default' : 'outline'}
               size="sm"
-              className="w-full justify-start"
+              className="w-full justify-start font-bold uppercase italic tracking-tighter"
               onClick={() => setActiveCategory(null)}
             >
-              All Meals
+              All Drops
             </Button>
             <Button
-              variant={activeCategory === 'Bestseller' ? 'default' : 'outline'}
+              variant={activeCategory === 'Signature' ? 'default' : 'outline'}
               size="sm"
-              className="w-full justify-start"
-              onClick={() => setActiveCategory('Bestseller')}
+              className="w-full justify-start font-bold uppercase italic tracking-tighter"
+              onClick={() => setActiveCategory('Signature')}
             >
-              Bestseller
+              Signature Series
             </Button>
             <Button
-              variant={activeCategory === 'Plant-Based' ? 'default' : 'outline'}
+              variant={activeCategory === 'Elite' ? 'default' : 'outline'}
               size="sm"
-              className="w-full justify-start"
-              onClick={() => setActiveCategory('Plant-Based')}
+              className="w-full justify-start font-bold uppercase italic tracking-tighter"
+              onClick={() => setActiveCategory('Elite')}
             >
-              Plant-Based
+              Elite Vault
             </Button>
             <Button
-              variant={activeCategory === 'High Calorie' ? 'default' : 'outline'}
+              variant={activeCategory === 'Standard' ? 'default' : 'outline'}
               size="sm"
-              className="w-full justify-start"
-              onClick={() => setActiveCategory('High Calorie')}
+              className="w-full justify-start font-bold uppercase italic tracking-tighter"
+              onClick={() => setActiveCategory('Standard')}
             >
-              High Calorie
-            </Button>
-            <Button
-              variant={activeCategory === 'International' ? 'default' : 'outline'}
-              size="sm"
-              className="w-full justify-start"
-              onClick={() => setActiveCategory('International')}
-            >
-              International
-            </Button>
-            <Button
-              variant={activeCategory === 'Keto' ? 'default' : 'outline'}
-              size="sm"
-              className="w-full justify-start"
-              onClick={() => setActiveCategory('Keto')}
-            >
-              Keto
-            </Button>
-            <Button
-              variant={activeCategory === 'Spicy' ? 'default' : 'outline'}
-              size="sm"
-              className="w-full justify-start"
-              onClick={() => setActiveCategory('Spicy')}
-            >
-              Spicy
+              Standard Issue
             </Button>
           </div>
         </div>

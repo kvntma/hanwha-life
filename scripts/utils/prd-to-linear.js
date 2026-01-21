@@ -14,7 +14,8 @@ console.log('Loading environment from:', envPath);
 config({ path: envPath });
 
 const LINEAR_API_KEY = process.env.LINEAR_API_KEY;
-const TEAM_ID = process.env.LINEAR_TEAM_ID;
+// Added fallback to your discovered Team ID
+const TEAM_ID = process.env.LINEAR_TEAM_ID || '2f63878f-7c59-40f3-a1b7-6a7ea6c37c5a';
 
 if (!LINEAR_API_KEY || !TEAM_ID) {
   console.error('Missing required environment variables:');
@@ -320,13 +321,34 @@ async function syncPRDToLinear() {
     });
     const existingTitles = new Set(existingIssues.nodes.map(issue => issue.title));
 
-    // First try the standard format
-    let sections = [...prdContent.matchAll(/## (.*?)\n\n### Tasks:\n\n((?:- \[( |x)\] .+\n)+)/g)];
+    // Parse line by line to be robust against newline issues
+    const lines = prdContent.split(/\r?\n/);
+    let currentSection = null;
+    let sections = [];
+    let currentTasks = [];
 
-    // If no sections are found with the standard format, try an alternative format
-    // that might exist in the PRD (without the ### Tasks: header)
-    if (sections.length === 0) {
-      sections = [...prdContent.matchAll(/## (.*?)\n\n((?:- \[( |x)\] .+\n)+)/g)];
+    for (const line of lines) {
+      const headerMatch = line.match(/^## (?!#)(.+)/); // Match ## Header but not ###
+      if (headerMatch) {
+        // Save previous section if it had tasks
+        if (currentSection && currentTasks.length > 0) {
+          sections.push([null, currentSection, currentTasks.join('\n')]);
+        }
+        currentSection = headerMatch[1].trim();
+        currentTasks = [];
+        continue;
+      }
+
+      // Match task list items: - [ ] Task or - [x] Task
+      const taskMatch = line.match(/^\s*-\s*\[( |x)\]\s+(.+)/);
+      if (taskMatch && currentSection) {
+        // Reconstruct the task line for later processing
+        currentTasks.push(`- [${taskMatch[1]}] ${taskMatch[2]}`);
+      }
+    }
+    // Push the last section
+    if (currentSection && currentTasks.length > 0) {
+      sections.push([null, currentSection, currentTasks.join('\n')]);
     }
 
     console.log(`Found ${sections.length} sections with tasks`);

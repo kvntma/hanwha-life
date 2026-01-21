@@ -9,13 +9,12 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="space-y-4">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold">
-                Bruh, <span className="text-primary">Chicken</span>
+              <span className="text-xl font-black uppercase italic tracking-tighter">
+                Beast <span className="text-primary">Tins</span>
               </span>
             </Link>
-            <p className="text-muted-foreground text-sm">
-              Premium meal prep for the fitness-focused. High protein, chef-crafted meals delivered
-              to your door.
+            <p className="text-muted-foreground text-sm font-medium">
+              Premium nicotine drops for the elite. Fast-acting, high-strength, and unapologetically bold.
             </p>
             <div className="flex space-x-4">
               <a href="https://instagram.com" className="text-foreground hover:text-primary">
@@ -39,38 +38,38 @@ const Footer = () => {
 
           {/* Links Columns */}
           <div>
-            <h3 className="text-sm font-semibold mb-4">Meals</h3>
-            <ul className="space-y-2 text-sm">
+            <h3 className="text-sm font-black uppercase italic tracking-tighter mb-4 text-primary">The Vault</h3>
+            <ul className="space-y-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
               <li>
                 <Link
                   href="/products"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  className="hover:text-primary transition-colors"
                 >
-                  All Meals
+                  All Drops
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/products?protein=chicken"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  href="/products?category=Signature"
+                  className="hover:text-primary transition-colors"
                 >
-                  Chicken Meals
+                  Signature Collection
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/products?protein=beef"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  href="/products?category=Elite"
+                  className="hover:text-primary transition-colors"
                 >
-                  Beef Meals
+                  Elite Tins
                 </Link>
               </li>
               <li>
                 <Link
-                  href="/products?protein=plant"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
+                  href="/products?category=Limited"
+                  className="hover:text-primary transition-colors"
                 >
-                  Plant-Based
+                  Limited Drops
                 </Link>
               </li>
             </ul>
@@ -146,10 +145,10 @@ const Footer = () => {
         </div>
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center">
-          <p className="text-xs text-muted-foreground">
-            © 2025 Bruh, Chicken. All rights reserved.
+          <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">
+            © 2026 Beast Tins. All rights reserved.
           </p>
-          <p className="text-xs text-muted-foreground mt-4 md:mt-0">Built with 💪 and 🍗</p>
+          <p className="text-xs text-muted-foreground mt-4 md:mt-0 font-bold uppercase tracking-widest">Built for the <span className="text-primary italic font-black">Elite</span></p>
         </div>
       </div>
     </footer>

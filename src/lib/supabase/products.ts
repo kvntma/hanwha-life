@@ -1,8 +1,9 @@
 import { Product, ProductInsert, ProductUpdate } from '@/types/product';
-import { useSupabaseClient } from '@/hooks/clerk/useSupabaseClient';
+import { createClient } from '@/lib/supabase/browser';
+import { useState } from 'react';
 
 export const useProducts = () => {
-  const supabase = useSupabaseClient();
+  const [supabase] = useState(() => createClient());
 
   return {
     // Get all available products
@@ -77,6 +78,22 @@ export const useProducts = () => {
 
       if (error) throw error;
       return data as Product;
+    },
+
+    // Upload an image to the storage bucket
+    uploadImage: async (file: File) => {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `products/${fileName}`;
+
+      const { data, error } = await supabase.storage.from('product-images').upload(filePath, file);
+
+      if (error) throw error;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage.from('product-images').getPublicUrl(filePath);
+
+      return publicUrl;
     },
   };
 };

@@ -10,15 +10,11 @@ export interface Product {
   updated_at: string;
   image: string | null;
   tagline: string | null;
-  weight: string | null;
+  weight: string | null; // Used for "Quantity per tin"
   featured: boolean;
   category: string | null;
-  nutrition?: {
-    calories: number;
-    protein: number;
-    carbs: number;
-    fat: number;
-  };
+  strength_mg?: number;
+  flavor_profile?: string;
 }
 
 export type ProductInsert = Omit<Product, 'id' | 'created_at' | 'updated_at'> & {

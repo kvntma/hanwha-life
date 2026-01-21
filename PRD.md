@@ -2,17 +2,17 @@
 
 ## 📌 Overview
 
-An e-commerce platform for selling and delivering pre-made meals (chicken-based products) to local customers. The store features a modern user interface, real-time updates, admin CMS for product/inventory management, and a robust payment/delivery integration.
+An e-commerce platform for selling and delivering pre-made meals (chicken-based products) to local customers. The store features a modern user interface, real-time updates, admin CMS for product/inventory management, and a manual E-Transfer payment flow to avoid processing fees.
 
 ---
 
 ## 🎯 Goals
 
 - Allow customers to browse, select, and purchase meals online.
-- Provide a smooth UI/UX for authentication and account management.
-- Integrate a secure, scalable delivery management flow.
-- Enable admin users to manage products, pricing, and delivery windows.
-- Automate syncing of product data between CMS, Supabase, and Stripe.
+- Provide a smooth UI/UX for authentication and account management using Supabase Auth.
+- Implement a cost-effective "E-Transfer" payment workflow.
+- Enable admin users to manage products, tracking orders, and verify payments via a Dashboard.
+- Provide real-time order status updates to users.
 
 ---
 
@@ -22,11 +22,10 @@ An e-commerce platform for selling and delivering pre-made meals (chicken-based 
 | --------------- | ------------------- | ------------------------------------------------------- |
 | Frontend        | React + TypeScript  | UI + State Management                                   |
 | Data Fetching   | React Query         | Cache, prefetching, and mutation of Supabase data       |
-| Auth (Backend)  | Supabase Auth       | Core authentication + RBAC logic                        |
-| Auth (UI Layer) | Clerk               | UI/UX enhancements + social login                       |
+| Auth            | Supabase Auth       | Authentication, Social Login (Google/GitHub), RBAC      |
 | Backend         | Supabase (Postgres) | DB management for products, users, orders, deliveries   |
-| Payments        | Stripe              | Checkout, pricing, subscriptions, and invoices          |
-| CMS             | Custom              | Admin dashboard for managing meals and delivery windows |
+| Payments        | E-Transfer (Manual) | Manual payment verification to avoid fees               |
+| CMS             | Custom / Shadcn UI  | Admin dashboard for managing meals, orders, and windows |
 
 ---
 
@@ -47,23 +46,65 @@ An e-commerce platform for selling and delivering pre-made meals (chicken-based 
 
 - [x] Create Supabase `products` table with fields: `id`, `name`, `description`, `price`, `inventory_count`, `stripe_product_id`, `available`.
 - [x] Build CMS UI form to add/edit/delete products.
-- [ ] Create Stripe product + pricing via API on Supabase insert.
-- [ ] Store returned Stripe product ID into Supabase.
 - [x] Use React Query to fetch `products` for frontend display.
-- [ ] Display inventory status and decrement after purchase.
+- [ ] Implement inventory tracking (optional: basic availability toggle).
 
 ---
 
-## Checkout & Payments
+## Shopping Cart
 
 ### Tasks:
 
-- [ ] Install and configure Stripe client SDK.
-- [ ] Create checkout flow with product, address, and delivery time.
-- [ ] Trigger `stripe.checkout.sessions.create` from the client.
-- [ ] Listen to `checkout.session.completed` webhook.
-- [ ] On webhook event, store order details in Supabase `orders` table.
-- [ ] Include delivery time in the order.
+- [x] Create `carts` and `cart_items` tables in Supabase.
+- [x] Implement cart persistence logic (items expire after 24 hours).
+- [x] Create RLS policies for cart access (users can only see their own carts).
+- [x] Update frontend to use Supabase for cart operations (add, remove, update quantity).
+- [x] Migrate from local storage/hardcoded cart to Supabase-backed cart.
+
+---
+
+## Checkout & Payments (E-Transfer Flow)
+
+### Concept:
+To avoid fees, the system uses a manual tracking system. Users place an order, receiving an Order ID, and manually send an Interac E-Transfer. Admins match the transfer to the Order ID in the dashboard.
+
+### Tasks:
+
+- [x] Create `orders` table in Supabase (`id`, `user_id`, `items`, `total`, `status`, `delivery_window`, `created_at`).
+    - Statuses: `pending_payment`, `payment_verified`, `preparing`, `out_for_delivery`, `delivered`, `cancelled`.
+- [x] Build Checkout Form:
+    - [x] User details (name, address, phone).
+    - [x] Delivery window selection.
+    - [x] Order summary.
+- [x] "Place Order" Action:
+    - [x] Creates record in `orders` table with status `pending_payment`.
+    - [x] Redirects to "Order Confirmation" page.
+- [x] Order Confirmation Page:
+    - [x] Displays **Order ID**.
+    - [x] Instructions: "Please Send E-Transfer of **$[Total]** to **payments@bruhchicken.com**".
+    - [x] Instructions: "Include Order ID **#[ID]** in the transfer message."
+- [x] **Admin Notifications**:
+    - [x] Create admin notification system for new orders.
+    - [x] Send email/in-app notification when order is placed.
+    - [x] Send notification when customer submits e-transfer reference.
+
+---
+
+## Admin Dashboard (CMS)
+
+### Tasks:
+
+- [x] **Order Management Dashboard**:
+    - [x] List all orders (filterable by status: `pending_payment`, `active`).
+    - [x] View order details (items, customer info, total).
+    - [x] **Mark as Paid**: Button to confirm E-Transfer received -> updates status to `preparing`.
+    - [x] **Update Status**: Workflow buttons (`Preparing` -> `Out for Delivery` -> `Delivered`).
+- [ ] **Product Management**:
+    - [x] Implement product CRUD UI.
+    - [ ] Upload images to Supabase Storage.
+- [ ] **Data Visualization**:
+    - Revenue tracking (sum of paid orders).
+    - Basic sales charts.
 
 ---
 
@@ -71,25 +112,9 @@ An e-commerce platform for selling and delivering pre-made meals (chicken-based 
 
 ### Tasks:
 
-- [ ] Create `delivery_windows` table in Supabase.
-- [ ] Allow admin to define delivery slots via CMS.
-- [ ] Let users choose a delivery slot during checkout.
-- [ ] Save delivery window with order info.
-- [ ] Admin UI to view orders per delivery time.
-- [ ] Future: implement routing/driver dispatch logic.
-
----
-
-## CMS Features
-
-### Tasks:
-
-- [ ] Create protected admin routes using Clerk.
-- [ ] Implement product CRUD UI.
-- [ ] Build dashboard to display all orders.
-- [ ] Add UI to update order status (e.g., "Preparing", "Delivered").
-- [ ] Create delivery window manager for available time slots.
-- [ ] Add filters for viewing orders by status or date.
+- [ ] Create `delivery_windows` table (or hardcode initially).
+- [ ] Allow users to select delivery preference during checkout.
+- [ ] Admin view of "Today's Deliveries" (Orders with status `out_for_delivery` or `preparing`).
 
 ---
 
@@ -97,30 +122,16 @@ An e-commerce platform for selling and delivering pre-made meals (chicken-based 
 
 ### Tasks:
 
-- [ ] Set up `useQuery` hooks with unique keys (`products`, `orders`, `inventory`).
-- [ ] Create mutations (`createOrder`, `updateInventory`, `createProduct`).
-- [ ] Add optimistic updates on order placement.
-- [ ] Configure `staleTime`, `cacheTime`, and `refetchOnWindowFocus`.
-
----
-
-## Webhooks & Automation
-
-### Tasks:
-
-- [ ] Write Supabase trigger on `products` to call serverless function that creates Stripe product.
-- [ ] Create a webhook handler (API route) for `checkout.session.completed`.
-- [ ] On webhook event, validate and store purchase data in `orders`.
-- [ ] Sync updated Stripe product details back to Supabase if changed.
-- [ ] Notify admins of new orders (optional: email/SMS via Twilio or SendGrid).
+- [x] Set up `useQuery` hooks with unique keys (`products`, `orders`, `inventory`).
+- [x] Create mutations (`createOrder`, `updateInventory`, `createProduct`).
+- [ ] Real-time subscription (Supabase Realtime) for Admin Dashboard new orders.
+- [ ] Optimistic updates for Admin status changes.
 
 ---
 
 ## Future Features
 
-- [ ] Subscription support via Stripe Billing.
-- [ ] Add user delivery tracking interface.
-- [ ] Implement delivery route optimization with Mapbox/Google Maps API.
-- [ ] Meal recommendations with vector-based food preference matching.
+- [ ] Automated SMS notifications (Twilio) when status changes.
+- [ ] User "My Orders" history page.
 
----
+- [ ] Mobile App (React Native).

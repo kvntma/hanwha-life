@@ -1,128 +1,84 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import Image from 'next/image';
-import DebugToken from '@/components/common/debug-token';
+import { Badge } from '@/components/ui/badge';
+import { Truck, ShieldCheck, Zap } from 'lucide-react';
 import { FeaturedProducts } from './components/FeaturedProducts';
 
 export default function Home() {
   return (
     <div className="space-y-8 w-full flex flex-col items-center">
-      <section className="relative h-[60vh] w-full flex items-center justify-center">
+      <section className="relative h-[80vh] w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://images.unsplash.com/photo-1532550907401-a500c9a57435?q=80&w=2069&auto=format&fit=crop"
-            alt="Grilled chicken"
-            className="object-cover"
+            src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop"
+            alt="Beast Tins Abstract Background"
+            className="object-cover opacity-40"
             fill
             priority
             sizes="100vw"
             quality={100}
-            style={{ objectFit: 'cover' }}
           />
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-background"></div>
         </div>
 
         <div className="container relative z-10 px-4 md:px-6 flex flex-col items-center text-center">
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tighter mb-4 text-white">
-            Fuel Up. <span className="text-primary">No Cap.</span>
+          <Badge className="mb-4 bg-primary/20 text-white border border-primary/50 py-1.5 px-6 text-xs font-bold uppercase tracking-widest overflow-hidden relative">
+            <span className="animate-smoke-drift relative z-10">Premium Drops Refined</span>
+          </Badge>
+          <h1 className="text-5xl md:text-8xl lg:text-9xl font-black leading-tight tracking-tighter mb-4 text-white uppercase italic">
+            <span className="animate-smoke">Beast</span> <span className="text-primary">Tins</span>
           </h1>
-          <DebugToken />
-          <p className="text-xl md:text-2xl text-gray-200 max-w-md md:max-w-lg mb-8">
-            Premium meal prep for the gains you deserve. Chef-crafted, macro-perfect.
+          <p className="text-xl md:text-2xl text-foreground max-w-xl mb-12 font-medium">
+            Elevate your edge. Minimalist drops. High-octane strength.
+            No compromises, just pure beast mode.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:flex-row gap-6">
             <Link href="/products">
-              <Button size="lg" className="rounded-full text-lg px-8">
-                Shop Meals
-              </Button>
-            </Link>
-            <Link href="/about">
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-full text-lg px-8 text-white border-white hover:bg-white hover:text-black"
-              >
-                See What's Cooking
+              <Button size="lg" className="rounded-full text-lg px-12 py-8 bg-primary hover:bg-tertiary transition-all hover:scale-105 shadow-[0_0_40px_rgba(255,0,0,0.3)] animate-shine font-black uppercase italic tracking-tighter">
+                Shop Collection
               </Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 bg-card">
+      <section className="py-24 bg-background">
         <div className="container px-4 md:px-6">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Why <span className="text-primary">Bruh, Chicken?</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-secondary">
-              <div className="rounded-full bg-primary p-4 mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-background"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                  />
-                </svg>
+          <div className="flex flex-col items-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-center mb-4 uppercase italic">
+              Why <span className="text-primary">Beast?</span>
+            </h2>
+            <div className="h-2 w-24 bg-primary rounded-full" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group">
+              <div className="rounded-2xl bg-primary/10 p-5 mb-6 group-hover:bg-primary transition-colors">
+                <Truck className="h-10 w-10 text-primary group-hover:text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Macro Perfection</h3>
-              <p className="text-muted-foreground">
-                Precisely calculated macros to support your fitness goals, whether bulking, cutting,
-                or maintaining.
+              <h3 className="text-2xl font-bold mb-3 uppercase italic">Fast Delivery</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Same-day dispatch on all local orders. We get your tins to you before you even know you need them.
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-secondary">
-              <div className="rounded-full bg-primary p-4 mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-background"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+            <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group">
+              <div className="rounded-2xl bg-primary/10 p-5 mb-6 group-hover:bg-primary transition-colors">
+                <ShieldCheck className="h-10 w-10 text-primary group-hover:text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Time Saver</h3>
-              <p className="text-muted-foreground">
-                Skip the meal prep hassle. More time for gains, less time cooking and cleaning.
+              <h3 className="text-2xl font-bold mb-3 uppercase italic">Discreet Shipping</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Plain packaging. No logos. Your business is your business. 100% confidential.
               </p>
             </div>
 
-            <div className="flex flex-col items-center text-center p-6 rounded-lg bg-secondary">
-              <div className="rounded-full bg-primary p-4 mb-4">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-8 w-8 text-background"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
+            <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group">
+              <div className="rounded-2xl bg-primary/10 p-5 mb-6 group-hover:bg-primary transition-colors">
+                <Zap className="h-10 w-10 text-primary group-hover:text-white" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Actually Tastes Good</h3>
-              <p className="text-muted-foreground">
-                Chef-crafted meals that make you forget you're eating "healthy food."
+              <h3 className="text-2xl font-bold mb-3 uppercase italic">Premium Pure</h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Zero fillers. Zero cap. Only the highest quality nicotine drops, curated for the elite.
               </p>
             </div>
           </div>
@@ -133,19 +89,22 @@ export default function Home() {
       <FeaturedProducts />
 
       {/* CTA Section */}
-      <section className="py-16 bg-primary text-primary-foreground w-full">
-        <div className="container px-4 md:px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Fuel Your Gains?</h2>
-          <p className="text-xl max-w-2xl mx-auto mb-8">
-            First-time customers get 10% off their order with code: NOCHEATMEAL
+      <section className="py-24 bg-primary text-primary-foreground w-full relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent opacity-20" />
+        </div>
+        <div className="container px-4 md:px-6 text-center relative z-10 mx-auto">
+          <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase italic tracking-tighter">Enter the Beast Mode?</h2>
+          <p className="text-xl max-w-2xl mx-auto mb-10 opacity-90">
+            Join the inner circle. Use code <span className="font-mono bg-white/20 px-2 py-1 rounded tracking-widest font-bold">BEAST24</span> for 15% off your first drop.
           </p>
           <Link href="/products">
             <Button
               size="lg"
               variant="outline"
-              className="rounded-full px-8 text-primary-foreground border-primary-foreground hover:bg-primary-foreground hover:text-primary"
+              className="rounded-full px-12 py-8 text-xl font-black uppercase italic border-2 border-white text-white hover:bg-white hover:text-primary transition-all shadow-2xl"
             >
-              Order Now
+              Secure The Tins
             </Button>
           </Link>
         </div>
@@ -167,8 +126,8 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-muted-foreground">
-                "Finally, meal prep that doesn't taste like cardboard. My clients love the macros,
-                and I love that they stay consistent with their nutrition."
+                "Finally, a drop that doesn't taste like chemicals. My clients love the flavor profiles,
+                and I love that they stay steady throughout their sessions."
               </p>
             </div>
 
@@ -183,8 +142,8 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-muted-foreground">
-                "Bruh, Chicken has been a game-changer for my competition prep. High protein, tasty
-                meals, and I don't have to think about cooking after training."
+                "Beast Tins has been a game-changer for my focus sessions. Clean strength,
+                premium flavors, and I don't have to crash after a long day."
               </p>
             </div>
 
@@ -199,8 +158,8 @@ export default function Home() {
                 </div>
               </div>
               <p className="text-muted-foreground">
-                "No cap, these meals are fire. I've tried all the meal prep companies, and Bruh,
-                Chicken is the only one that hits different. The Shredder is my go-to."
+                "No cap, these tins are fire. I've tried all the drop brands, and Beast
+                Tins is the only one that hits different. Arctic Mint is my go-to."
               </p>
             </div>
           </div>

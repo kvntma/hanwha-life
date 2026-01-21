@@ -37,10 +37,10 @@ const ProductsPage = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <main className="flex-1 container px-4 md:px-6 py-8">
+    <div className="min-h-screen flex flex-col items-center w-full">
+      <div className="max-w-7xl mx-auto w-full px-4 md:px-6 py-8">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
-          <h1 className="text-3xl font-bold mb-4 md:mb-0">Browse Our Meals</h1>
+          <h1 className="text-4xl font-black uppercase italic tracking-tighter">The Drop <span className="text-primary">Collection</span></h1>
 
           <div className="w-full md:w-auto flex items-center">
             <Button
@@ -65,8 +65,8 @@ const ProductsPage = () => {
           <div className="col-span-1 md:col-span-3">
             {filteredProducts.length === 0 ? (
               <div className="text-center py-12">
-                <h3 className="text-xl font-medium mb-2">No meals found</h3>
-                <p className="text-muted-foreground mb-4">Try changing your filters</p>
+                <h3 className="text-2xl font-black uppercase italic tracking-tighter mb-2">No drops found</h3>
+                <p className="text-muted-foreground mb-4 font-medium uppercase text-xs tracking-widest">The vault is empty. Try a different line.</p>
                 <Button variant="outline" onClick={() => setActiveCategory(null)}>
                   Clear Filters
                 </Button>
@@ -80,7 +80,7 @@ const ProductsPage = () => {
             )}
           </div>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
