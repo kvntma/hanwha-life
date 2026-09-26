@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+@import "tailwindcss";
+@import "tw-animate-css";
 
 @theme inline {
   --color-background: var(--background);
@@ -124,7 +124,6 @@
 }
 
 @keyframes breathing-smoke {
-
   0%,
   100% {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
@@ -140,7 +139,6 @@
 }
 
 @keyframes breathing-smoke-light {
-
   0%,
   100% {
     text-shadow: 0 0 8px rgba(0, 0, 0, 0.15);
@@ -165,7 +163,6 @@
 }
 
 @keyframes smoke-drift {
-
   0%,
   100% {
     text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.2);
@@ -207,10 +204,7 @@
   left: -100%;
   width: 50%;
   height: 200%;
-  background: linear-gradient(to right,
-      transparent,
-      rgba(255, 255, 255, 0.4),
-      transparent);
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.4), transparent);
   transform: rotate(25deg);
   transition: opacity 0.3s ease;
   opacity: 0;
@@ -219,6 +213,74 @@
 .animate-shine:hover::after {
   opacity: 1;
   animation: shine-sweep 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes shimmer-sweep {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.shimmer-overlay {
+  background-image: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 70%
+  );
+  background-size: 250% 100%;
+  animation: shimmer-sweep 2.5s linear infinite;
+}
+
+@keyframes aurora-1 {
+  0% {
+    transform: translate(-10%, -12%) scale(1);
+  }
+  50% {
+    transform: translate(12%, 8%) scale(1.25);
+  }
+  100% {
+    transform: translate(-6%, 14%) scale(0.95);
+  }
+}
+
+@keyframes aurora-2 {
+  0% {
+    transform: translate(12%, 10%) scale(1.1);
+  }
+  50% {
+    transform: translate(-14%, -6%) scale(0.9);
+  }
+  100% {
+    transform: translate(8%, -12%) scale(1.2);
+  }
+}
+
+@keyframes aurora-3 {
+  0% {
+    transform: translateY(16%) scale(0.95);
+  }
+  50% {
+    transform: translate(10%, -10%) scale(1.15);
+  }
+  100% {
+    transform: translate(-12%, 4%) scale(1);
+  }
+}
+
+.animate-aurora-1 {
+  animation: aurora-1 22s ease-in-out infinite alternate;
+}
+
+.animate-aurora-2 {
+  animation: aurora-2 26s ease-in-out infinite alternate;
+}
+
+.animate-aurora-3 {
+  animation: aurora-3 24s ease-in-out infinite alternate;
 }
 
 /* Border Beam Effect */
@@ -250,13 +312,15 @@
   position: absolute;
   /* Massive inset to ensure the rotating source covers all corners */
   inset: -150%;
-  background: conic-gradient(from 0deg,
-      transparent 0deg,
-      transparent 280deg,
-      rgba(255, 255, 255, 0.4) 300deg,
-      rgba(255, 255, 255, 0.9) 330deg,
-      white 345deg,
-      rgba(255, 255, 255, 1) 360deg);
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(255, 255, 255, 0.4) 300deg,
+    rgba(255, 255, 255, 0.9) 330deg,
+    white 345deg,
+    rgba(255, 255, 255, 1) 360deg
+  );
   /* Mask ensures only the 4px border edge is visible */
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -272,10 +336,12 @@
   content: "";
   position: absolute;
   inset: -150%;
-  background: conic-gradient(from 0deg,
-      transparent 280deg,
-      rgba(29, 78, 216, 0.4) 320deg,
-      rgba(255, 255, 255, 0.8) 360deg);
+  background: conic-gradient(
+    from 0deg,
+    transparent 280deg,
+    rgba(29, 78, 216, 0.4) 320deg,
+    rgba(255, 255, 255, 0.8) 360deg
+  );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
@@ -287,7 +353,6 @@
 
 /* Smokey Emission Effect */
 @keyframes smoke-emit {
-
   0%,
   100% {
     transform: scale(1) translate(0, 0);
