@@ -1,5 +1,6 @@
+import { recordFailure, recordSuccess } from '@/lib/alerts/failure-tracker';
 import { createClient } from '@/lib/supabase/server';
-import { Product } from '@/types/product';
+import type { Product } from '@/types/product';
 
 export async function getProducts() {
   const supabase = await createClient();
@@ -9,7 +10,12 @@ export async function getProducts() {
     .select('*')
     .order('created_at', { ascending: false });
 
-  if (error) throw error;
+  if (error) {
+    recordFailure('supabase:getProducts', error);
+    throw error;
+  }
+
+  recordSuccess('supabase:getProducts');
   return data as Product[];
 }
 
@@ -22,7 +28,12 @@ export async function getFeaturedProducts() {
     .eq('featured', true)
     .order('created_at', { ascending: false });
 
-  if (error) throw error;
+  if (error) {
+    recordFailure('supabase:getFeaturedProducts', error);
+    throw error;
+  }
+
+  recordSuccess('supabase:getFeaturedProducts');
   return data as Product[];
 }
 
@@ -36,9 +47,11 @@ export async function getProduct(id: string) {
     .single();
 
   if (error) {
+    recordFailure('supabase:getProduct', error);
     console.error('Error fetching product:', error);
     return null;
   }
 
+  recordSuccess('supabase:getProduct');
   return product;
 }
