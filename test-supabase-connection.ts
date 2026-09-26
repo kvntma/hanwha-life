@@ -57,6 +57,14 @@ const newPeptides = [
 ];
 
 async function seedDatabase() {
+    if (!process.argv.includes('--confirm')) {
+        console.error(
+            `Refusing to run: this DELETES ALL ROWS in "products" on ${supabaseUrl} before reseeding.\n` +
+            'Re-run with --confirm if you really mean to do this (e.g. `npx tsx test-supabase-connection.ts --confirm`).'
+        );
+        process.exit(1);
+    }
+
     console.log('Seeding products on:', supabaseUrl);
 
     // 1. Delete old products
