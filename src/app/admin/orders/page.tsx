@@ -26,7 +26,7 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { Loader2, MoreVertical, CheckCircle, Truck, Package, XCircle, Clock, Search, X } from 'lucide-react';
+import { Loader2, MoreVertical, CheckCircle, Truck, Package, XCircle, Clock, Search, X, Copy } from 'lucide-react';
 import { toast } from 'sonner';
 import { useState, useMemo } from 'react';
 
@@ -248,6 +248,7 @@ export default function AdminOrdersPage() {
                             <TableHead>Address</TableHead>
                             <TableHead>Total</TableHead>
                             <TableHead>Status</TableHead>
+                            <TableHead>Interac Ref</TableHead>
                             <TableHead>Delivery Slot</TableHead>
                             <TableHead>Date</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
@@ -256,7 +257,7 @@ export default function AdminOrdersPage() {
                     <TableBody>
                         {paginatedOrders.length === 0 ? (
                             <TableRow>
-                                <TableCell colSpan={8} className="text-center py-10 text-muted-foreground">
+                                <TableCell colSpan={9} className="text-center py-10 text-muted-foreground">
                                     {hasActiveFilters ? 'No orders match your filters.' : 'No orders found.'}
                                 </TableCell>
                             </TableRow>
@@ -287,6 +288,26 @@ export default function AdminOrdersPage() {
                                                 <StatusIcon className="h-3 w-3" />
                                                 {status.label}
                                             </Badge>
+                                        </TableCell>
+                                        <TableCell className="text-xs">
+                                            {order.etransfer_reference ? (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => {
+                                                        if (order.etransfer_reference) {
+                                                            navigator.clipboard.writeText(order.etransfer_reference);
+                                                            toast.success('Interac reference copied!');
+                                                        }
+                                                    }}
+                                                    className="flex items-center gap-1 font-mono font-bold text-primary hover:underline"
+                                                    title="Click to copy Interac reference"
+                                                >
+                                                    <span>{order.etransfer_reference}</span>
+                                                    <Copy className="h-3 w-3" />
+                                                </button>
+                                            ) : (
+                                                <span className="text-muted-foreground text-[11px] italic">Pending</span>
+                                            )}
                                         </TableCell>
                                         <TableCell className="text-xs">
                                             {order.delivery_window}

@@ -40,39 +40,39 @@
 
 :root {
   --radius: 1.5rem;
-  --background: hsl(240 4% 95%);
-  --foreground: hsl(240 5% 10%);
+  --background: hsl(0 0% 100%);
+  --foreground: hsl(240 10% 3.9%);
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(240 5% 10%);
+  --card-foreground: hsl(240 10% 3.9%);
   --popover: hsl(0 0% 100%);
-  --popover-foreground: hsl(240 5% 10%);
-  --primary: hsl(0 72.2% 50.6%);
+  --popover-foreground: hsl(240 10% 3.9%);
+  --primary: hsl(221.2 83.2% 53.3%);
   --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(240 4% 83%);
-  --secondary-foreground: hsl(240 5% 10%);
-  --muted: hsl(240 4% 83%);
+  --secondary: hsl(240 4.8% 95.9%);
+  --secondary-foreground: hsl(240 5.9% 10%);
+  --muted: hsl(240 4.8% 95.9%);
   --muted-foreground: hsl(240 3.8% 46.1%);
-  --accent: hsl(355 100% 97%);
-  --accent-foreground: hsl(0 72.2% 50.6%);
+  --accent: hsl(174 60% 94%);
+  --accent-foreground: hsl(174 75% 33%);
   --destructive: hsl(0 84.2% 60.2%);
   --destructive-foreground: hsl(0 0% 98%);
-  --border: hsl(240 4% 83%);
-  --input: hsl(240 4% 83%);
-  --ring: hsl(0 72.2% 50.6%);
-  --chart-1: hsl(24 100% 50%);
-  --chart-2: hsl(0 72.2% 50.6%);
-  --chart-3: hsl(240 5% 10%);
-  --chart-4: hsl(240 4% 83%);
+  --border: hsl(240 5.9% 90%);
+  --input: hsl(240 5.9% 90%);
+  --ring: hsl(221.2 83.2% 53.3%);
+  --chart-1: hsl(221.2 83.2% 53.3%);
+  --chart-2: hsl(174 75% 33%);
+  --chart-3: hsl(240 10% 3.9%);
+  --chart-4: hsl(240 4.8% 95.9%);
   --chart-5: hsl(240 3.8% 46.1%);
   --sidebar: hsl(0 0% 100%);
-  --sidebar-foreground: hsl(240 5% 10%);
-  --sidebar-primary: hsl(0 72.2% 50.6%);
+  --sidebar-foreground: hsl(240 10% 3.9%);
+  --sidebar-primary: hsl(221.2 83.2% 53.3%);
   --sidebar-primary-foreground: hsl(0 0% 100%);
-  --sidebar-accent: hsl(240 4% 83%);
-  --sidebar-accent-foreground: hsl(240 5% 10%);
-  --sidebar-border: hsl(240 4% 83%);
-  --sidebar-ring: hsl(0 72.2% 50.6%);
-  --tertiary: hsl(0 100% 25%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 10% 3.9%);
+  --sidebar-border: hsl(240 5.9% 90%);
+  --sidebar-ring: hsl(221.2 83.2% 53.3%);
+  --tertiary: hsl(174 75% 33%);
   --tertiary-foreground: hsl(0 0% 100%);
 }
 
@@ -83,34 +83,34 @@
   --card-foreground: hsl(0 0% 98%);
   --popover: hsl(240 10% 3.9%);
   --popover-foreground: hsl(0 0% 98%);
-  --primary: hsl(0 72.2% 50.6%);
-  --primary-foreground: hsl(0 0% 100%);
+  --primary: hsl(217.2 91.2% 59.8%);
+  --primary-foreground: hsl(222.2 47.4% 11.2%);
   --secondary: hsl(240 3.7% 15.9%);
   --secondary-foreground: hsl(0 0% 98%);
   --muted: hsl(240 3.7% 15.9%);
   --muted-foreground: hsl(240 5% 64.9%);
-  --accent: hsl(240 3.7% 15.9%);
-  --accent-foreground: hsl(0 0% 98%);
+  --accent: hsl(174 60% 12%);
+  --accent-foreground: hsl(174 60% 85%);
   --destructive: hsl(0 62.8% 30.6%);
   --destructive-foreground: hsl(0 0% 98%);
   --border: hsl(240 3.7% 15.9%);
   --input: hsl(240 3.7% 15.9%);
-  --ring: hsl(0 72.2% 50.6%);
-  --chart-1: hsl(24 100% 50%);
-  --chart-2: hsl(0 72.2% 50.6%);
+  --ring: hsl(217.2 91.2% 59.8%);
+  --chart-1: hsl(217.2 91.2% 59.8%);
+  --chart-2: hsl(174 60% 85%);
   --chart-3: hsl(0 0% 98%);
   --chart-4: hsl(240 3.7% 15.9%);
   --chart-5: hsl(240 5% 64.9%);
   --sidebar: hsl(240 10% 3.9%);
   --sidebar-foreground: hsl(0 0% 98%);
-  --sidebar-primary: hsl(0 72.2% 50.6%);
-  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-primary: hsl(217.2 91.2% 59.8%);
+  --sidebar-primary-foreground: hsl(222.2 47.4% 11.2%);
   --sidebar-accent: hsl(240 3.7% 15.9%);
   --sidebar-accent-foreground: hsl(0 0% 98%);
   --sidebar-border: hsl(240 3.7% 15.9%);
-  --sidebar-ring: hsl(0 72.2% 50.6%);
-  --tertiary: hsl(0 100% 25%);
-  --tertiary-foreground: hsl(0 0% 100%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --tertiary: hsl(174 60% 25%);
+  --tertiary-foreground: hsl(0 0% 98%);
 }
 
 @layer base {
@@ -274,7 +274,7 @@
   inset: -150%;
   background: conic-gradient(from 0deg,
       transparent 280deg,
-      rgba(239, 68, 68, 0.4) 320deg,
+      rgba(29, 78, 216, 0.4) 320deg,
       rgba(255, 255, 255, 0.8) 360deg);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);

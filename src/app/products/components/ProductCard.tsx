@@ -24,7 +24,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       <Link href={`/products/${product.id}`} className="flex-grow">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
           <Image
-            src={product.image || '/images/products/chicken-breast.png'}
+            src={product.image || 'https://images.unsplash.com/photo-1576086213369-97a306dca665?q=80&w=2070&auto=format&fit=crop'}
             alt={product.name}
             className="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-110"
             fill

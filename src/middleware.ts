@@ -54,9 +54,13 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  let user = null;
+  try {
+    const { data } = await supabase.auth.getUser();
+    user = data?.user || null;
+  } catch (err) {
+    console.error('Middleware Auth Error:', err);
+  }
 
   // Protect admin routes
   if (request.nextUrl.pathname.startsWith('/admin')) {

@@ -17,15 +17,15 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Beast Tins | Premium Nicotine Drops & Pouches',
+  title: 'VialSupply | Premium Research Peptides',
   description:
-    'The ultimate source for premium nicotine drops. Beast Tins offers curated, high-strength flavors for those who demand the best.',
+    'The ultimate source for premium research peptides. VialSupply offers curated, high-purity compounds for scientific validation and laboratory excellence.',
   keywords:
-    'nicotine drops, Beast Tins, premium pouches, black thunder, arctic mint, iridescent smoke',
+    'research peptides, VialSupply, BPC-157, TB-500, Semaglutide, high purity, laboratory research',
   openGraph: {
-    title: 'Beast Tins | Premium Nicotine Drops & Pouches',
+    title: 'VialSupply | Premium Research Peptides',
     description:
-      'The ultimate source for premium nicotine drops. Beast Tins offers curated, high-strength flavors for those who demand the best.',
+      'The ultimate source for premium research peptides. VialSupply offers curated, high-purity compounds for scientific validation and laboratory excellence.',
     type: 'website',
     locale: 'en_US',
     images: [
@@ -33,15 +33,15 @@ export const metadata: Metadata = {
         url: 'https://pouchpal-store.lovable.app/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Beast Tins Premium Collection',
+        alt: 'VialSupply Premium Collection',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Beast Tins | Premium Nicotine Drops & Pouches',
+    title: 'VialSupply | Premium Research Peptides',
     description:
-      'The ultimate source for premium nicotine drops. Beast Tins offers curated, high-strength flavors for those who demand the best.',
+      'The ultimate source for premium research peptides. VialSupply offers curated, high-purity compounds for scientific validation and laboratory excellence.',
     images: [
       'https://pouchpal-store.lovable.app/og-image.png',
     ],
@@ -56,7 +56,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${poppins.variable} font-sans`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <AuthProvider>
             <QueryProvider
               initialData={{

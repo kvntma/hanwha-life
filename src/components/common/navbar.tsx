@@ -30,7 +30,7 @@ const Navbar = () => {
         <div className="flex-1 flex justify-start">
           <Link href="/" className="flex items-center">
             <span className="text-2xl font-extrabold tracking-tighter uppercase italic">
-              <span className="animate-smoke dark:text-white text-black">Beast</span> <span className="text-primary italic">Tins</span>
+              <span className="animate-smoke dark:text-white text-black">Vial</span><span className="text-primary italic">Supply</span>
             </span>
           </Link>
         </div>
@@ -42,6 +42,9 @@ const Navbar = () => {
           </Link>
           <Link href="/products" className="text-foreground hover:text-tertiary transition-colors font-bold uppercase text-[10px] tracking-widest">
             Collection
+          </Link>
+          <Link href="/distribution" className="text-foreground hover:text-tertiary transition-colors font-bold uppercase text-[10px] tracking-widest">
+            GTA Drops
           </Link>
           <Link href="/about" className="text-foreground hover:text-tertiary transition-colors font-bold uppercase text-[10px] tracking-widest">
             The Vault
@@ -134,6 +137,13 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
             >
               Collection
+            </Link>
+            <Link
+              href="/distribution"
+              className="text-foreground hover:text-tertiary transition-colors py-2 font-bold uppercase text-xs tracking-widest"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              GTA Drops
             </Link>
             <Link
               href="/about"

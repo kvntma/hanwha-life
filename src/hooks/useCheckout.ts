@@ -31,7 +31,7 @@ export const useCheckout = () => {
             // 1. Create the order with transaction_id
             // Generate a temporary UUID to create the transaction_id
             const tempOrderId = crypto.randomUUID();
-            const transactionId = `BEAST-${tempOrderId.substring(0, 8).toUpperCase()}`;
+            const transactionId = `VIAL-${tempOrderId.substring(0, 8).toUpperCase()}`;
 
             const { data: order, error: orderError } = await supabase
                 .from('orders')

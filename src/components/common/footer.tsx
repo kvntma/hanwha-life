@@ -10,11 +10,11 @@ const Footer = () => {
           <div className="space-y-4">
             <Link href="/" className="flex items-center">
               <span className="text-xl font-black uppercase italic tracking-tighter">
-                Beast <span className="text-primary">Tins</span>
+                Vial<span className="text-primary">Supply</span>
               </span>
             </Link>
             <p className="text-muted-foreground text-sm font-medium">
-              Premium nicotine drops for the elite. Fast-acting, high-strength, and unapologetically bold.
+              Premium research peptides for metabolic, recovery, and performance enhancement. Pure, fast, and domestic.
             </p>
             <div className="flex space-x-4">
               <a href="https://instagram.com" className="text-foreground hover:text-primary">
@@ -61,7 +61,7 @@ const Footer = () => {
                   href="/products?category=Elite"
                   className="hover:text-primary transition-colors"
                 >
-                  Elite Tins
+                  Elite Peptides
                 </Link>
               </li>
               <li>
@@ -126,10 +126,10 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/shipping"
+                  href="/distribution"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Shipping Info
+                  GTA Drops & Shipping
                 </Link>
               </li>
               <li>
@@ -146,7 +146,7 @@ const Footer = () => {
 
         <div className="mt-8 pt-8 border-t border-border flex flex-col md:flex-row justify-between items-center">
           <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">
-            © 2026 Beast Tins. All rights reserved.
+            © 2026 VialSupply. All rights reserved.
           </p>
           <p className="text-xs text-muted-foreground mt-4 md:mt-0 font-bold uppercase tracking-widest">Built for the <span className="text-primary italic font-black">Elite</span></p>
         </div>

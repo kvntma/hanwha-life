@@ -61,6 +61,7 @@ export default function AdminDashboard() {
         <h1 className="text-4xl font-black uppercase italic tracking-tighter">Admin Dashboard</h1>
         <div className="flex gap-2">
           <Button variant="outline" onClick={() => refetch()} className="font-black uppercase italic tracking-tighter">Refresh</Button>
+          <Button onClick={() => router.push('/admin/distribution')} variant="outline" className="font-black uppercase italic tracking-tighter border-primary/40 text-primary hover:bg-primary/10">GTA Dispatch Hub</Button>
           <Button onClick={() => router.push('/admin/cms')} className="bg-primary hover:bg-primary/90 text-white font-black uppercase italic tracking-tighter shadow-lg shadow-primary/20">Manage Collection</Button>
         </div>
       </div>

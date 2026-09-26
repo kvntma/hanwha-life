@@ -17,13 +17,13 @@ const About = () => {
               </div>
               <h1 className="text-5xl md:text-7xl font-black uppercase italic tracking-tighter leading-none">
                 Engineering <br />
-                The <span className="text-primary italic">Perfect Drop.</span>
+                The <span className="text-primary italic">Perfect Vial.</span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-xl leading-relaxed">
-                Beast Tins isn't just a product. It's a high-performance nicotine delivery system designed for those who demand precision, intensity, and zero compromises.
+                VialSupply isn't just a supplier. It's a high-performance research compound system designed for those who demand precision, purity, and zero compromises.
               </p>
               <Link href="/products">
-                <Button size="lg" className="rounded-full px-12 py-8 text-xl bg-primary hover:bg-tertiary font-black uppercase italic tracking-tighter shadow-2xl shadow-primary/20 transition-all hover:scale-105">
+                <Button size="lg" className="rounded-full px-12 py-8 text-xl bg-primary hover:bg-tertiary font-black uppercase italic tracking-tighter shadow-2xl shadow-primary/20 transition-all hover:scale-105 text-white">
                   Enter The Vault
                 </Button>
               </Link>
@@ -32,11 +32,11 @@ const About = () => {
             <div className="relative">
               <div className="aspect-square rounded-[3rem] overflow-hidden border-8 border-white/10 shadow-[0_0_100px_rgba(255,255,255,0.1)] bg-zinc-900 flex items-center justify-center p-12">
                 <Image
-                  src="https://pouchpal-store.lovable.app/assets/product-strong-DkOY5pmk.jpg"
-                  alt="Beast Tins Elite Canister"
+                  src="https://images.unsplash.com/photo-1576086213369-97a306dca665?q=80&w=2070&auto=format&fit=crop"
+                  alt="VialSupply Elite Vial"
                   width={600}
                   height={600}
-                  className="w-full h-auto object-contain hover:scale-110 transition-transform duration-700"
+                  className="w-full h-auto object-contain hover:scale-110 transition-transform duration-700 rounded-2xl"
                   priority
                 />
               </div>
@@ -51,10 +51,10 @@ const About = () => {
         <div className="container px-4 md:px-6 mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
             {[
-              { val: '24MG', label: 'Max Strength' },
-              { val: '100%', label: 'Synthetic Pure' },
-              { val: '0.0S', label: 'Onset Delay' },
-              { val: '12H', label: 'Sustained Flow' }
+              { val: '99.8%', label: 'HPLC Verifiable' },
+              { val: '100%', label: 'Synthesized Pure' },
+              { val: '0.0S', label: 'Lyophilized' },
+              { val: 'DOMESTIC', label: 'Fast Shipping' }
             ].map((stat, i) => (
               <div key={i} className="text-center space-y-2 group">
                 <div className="text-4xl md:text-6xl font-black italic tracking-tighter text-primary group-hover:scale-110 transition-transform">{stat.val}</div>
@@ -79,14 +79,14 @@ const About = () => {
                 <Shield className="h-10 w-10 text-primary mb-2" />
                 <h3 className="text-2xl font-black uppercase italic tracking-tighter">The Secure Vault</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Every tin is a sealed environment. We use proprietary multi-layered barrier technology to ensure zero flavor drift and maximum moisture retention. When you pop a Beast Tin, you're experiencing the drop exactly as it was engineered in the lab.
+                  Every vial is a sterile, vacuum-sealed environment. We use proprietary nitrogen flushing technology to ensure zero oxidation and maximum stability. When you reconstitute a VialSupply vial, you're experiencing the compound exactly as it was synthesized in the lab.
                 </p>
               </div>
               <div className="bg-card/50 backdrop-blur-sm p-10 rounded-[2.5rem] border border-white/10 space-y-4">
                 <Target className="h-10 w-10 text-primary mb-2" />
-                <h3 className="text-2xl font-black uppercase italic tracking-tighter">Precision Onset</h3>
+                <h3 className="text-2xl font-black uppercase italic tracking-tighter">Precision Lyophilization</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  We've optimized the pH balance and carrier matrix for instantaneous absorption. No waiting, no buildup—just immediate, clinical-grade nicotine delivery that hits exactly when you need the focus.
+                  We've optimized the freeze-drying matrix for instantaneous reconstitution. No waiting, no cloudiness—just immediate, clinical-grade peptide dissolution that performs exactly when your laboratory analysis requires.
                 </p>
               </div>
             </div>
@@ -114,7 +114,7 @@ const About = () => {
                 {
                   name: 'Richard Bui',
                   role: 'Creative Director',
-                  bio: 'Visionary artist bringing Studio Ghibli dreams to the Beast Tins universe.',
+                  bio: 'Visionary artist bringing Studio Ghibli dreams to the VialSupply universe.',
                   img: null,
                   placeholder: 'RB',
                   ghibli: true

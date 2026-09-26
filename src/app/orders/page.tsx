@@ -121,7 +121,7 @@ export default function OrdersPage() {
                     <p className="text-muted-foreground mt-1 font-medium uppercase text-[10px] tracking-widest">Track your recent purchases and delivery status.</p>
                 </div>
                 <Link href="/products">
-                    <Button variant="outline" className="font-black uppercase italic tracking-tighter">Order More Tins</Button>
+                    <Button variant="outline" className="font-black uppercase italic tracking-tighter">Order More Vials</Button>
                 </Link>
             </div>
 

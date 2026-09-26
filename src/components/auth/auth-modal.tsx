@@ -20,7 +20,7 @@ export function AuthModal({ isOpen, onClose }: AuthModalProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogTitle className="text-2xl font-bold text-center">
-          Welcome to <span className="text-primary italic">Beast</span> Tins
+          Welcome to <span className="text-primary italic">Vial</span>Supply
         </DialogTitle>
         <div className="flex flex-col space-y-4">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">

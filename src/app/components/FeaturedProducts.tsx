@@ -30,7 +30,7 @@ export function FeaturedProducts() {
       <div className="container px-4 md:px-6">
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-black uppercase italic tracking-tighter">
-            The <span className="text-primary">Beast</span> Collection
+            The <span className="text-primary">VialSupply</span> Collection
           </h2>
           <Button variant="ghost" asChild>
             <Link href="/products">

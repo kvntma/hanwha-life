@@ -1,3 +1,6 @@
+-- Ensure etransfer_reference column exists on orders first
+alter table orders add column if not exists etransfer_reference text;
+
 -- Create admin_notifications table
 create table if not exists admin_notifications (
   id uuid default gen_random_uuid() primary key,

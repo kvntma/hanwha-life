@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${product.name} | Beast Tins`,
+    title: `${product.name} | VialSupply`,
     description: product.description,
     openGraph: {
       title: product.name,
@@ -99,14 +99,14 @@ export default async function ProductPage({ params }: Props) {
 
               <div className="grid gap-4 p-8 bg-zinc-800/80 rounded-[1.5rem] border border-white/20 shadow-2xl">
                 <div>
-                  <h3 className="font-black uppercase italic tracking-tighter mb-4 border-b border-white/20 pb-2 text-primary text-lg">Tin Specifications</h3>
+                  <h3 className="font-black uppercase italic tracking-tighter mb-4 border-b border-white/20 pb-2 text-primary text-lg">Vial Specifications</h3>
                   <div className="space-y-3">
                     <div className="flex justify-between items-center bg-white/10 p-4 rounded-xl border border-white/10">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-foreground">Nicotine Strength</span>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-foreground">Strength</span>
                       <span className="font-black italic text-foreground">{product.strength_mg} MG</span>
                     </div>
                     <div className="flex justify-between items-center bg-white/10 p-4 rounded-xl border border-white/10">
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-foreground">Flavor Profile</span>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-foreground">Form / Purity</span>
                       <span className="font-black italic text-foreground uppercase">{product.flavor_profile}</span>
                     </div>
                     <div className="flex justify-between items-center bg-white/10 p-4 rounded-xl border border-white/10">
@@ -122,7 +122,7 @@ export default async function ProductPage({ params }: Props) {
                   <div className="h-10 w-10 bg-primary/20 rounded-full flex items-center justify-center text-xl">🔥</div>
                   <div>
                     <p className="font-black text-primary text-sm uppercase italic tracking-tighter">Selling Fast!</p>
-                    <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Only {product.inventory_count} tins left. Secure your drop.</p>
+                    <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Only {product.inventory_count} vials left. Secure your drop.</p>
                   </div>
                 </div>
               )}
@@ -149,7 +149,7 @@ export default async function ProductPage({ params }: Props) {
       <section className="space-y-12">
         <div className="flex flex-col items-center text-center space-y-4">
           <h2 className="text-4xl md:text-5xl font-black uppercase italic tracking-tighter">Similar <span className="text-primary">Drops</span></h2>
-          <p className="text-muted-foreground max-w-2xl font-medium">Explore more premium nicotine delivery systems from the Beast Collection.</p>
+          <p className="text-muted-foreground max-w-2xl font-medium">Explore more premium research compounds from the VialSupply collection.</p>
           <div className="h-1.5 w-24 bg-primary rounded-full" />
         </div>
 

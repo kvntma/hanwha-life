@@ -11,7 +11,7 @@ export type OrderStatus =
 export interface Order {
     id: string;
     user_id: string;
-    transaction_id: string; // BEAST-XXXXXXXX format shown on confirmation page
+    transaction_id: string; // VIAL-XXXXXXXX format shown on confirmation page
     full_name: string;
     address: string;
     phone: string;

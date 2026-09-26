@@ -5,8 +5,8 @@ import { AdminNav } from './admin-nav';
 const navigation = [
     { name: 'Dashboard', href: '/admin' },
     { name: 'Orders', href: '/admin/orders' },
+    { name: 'Distribution', href: '/admin/distribution' },
     { name: 'Products (CMS)', href: '/admin/cms' },
-    // Add other admin routes here as they are created
 ];
 
 export default function AdminLayout({

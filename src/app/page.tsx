@@ -12,7 +12,7 @@ export default function Home() {
         <div className="absolute inset-0 z-0">
           <Image
             src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop"
-            alt="Beast Tins Abstract Background"
+            alt="VialSupply Abstract Background"
             className="object-cover opacity-40"
             fill
             priority
@@ -24,18 +24,18 @@ export default function Home() {
 
         <div className="container relative z-10 px-4 md:px-6 flex flex-col items-center text-center">
           <Badge className="mb-4 bg-primary/20 text-white border border-primary/50 py-1.5 px-6 text-xs font-bold uppercase tracking-widest overflow-hidden relative">
-            <span className="animate-smoke-drift relative z-10">Premium Drops Refined</span>
+            <span className="animate-smoke-drift relative z-10">Premium Vials Refined</span>
           </Badge>
           <h1 className="text-5xl md:text-8xl lg:text-9xl font-black leading-tight tracking-tighter mb-4 text-white uppercase italic">
-            <span className="animate-smoke">Beast</span> <span className="text-primary">Tins</span>
+            <span className="animate-smoke">Vial</span><span className="text-primary">Supply</span>
           </h1>
           <p className="text-xl md:text-2xl text-foreground max-w-xl mb-12 font-medium">
-            Elevate your edge. Minimalist drops. High-octane strength.
-            No compromises, just pure beast mode.
+            Accelerate your research. High-purity peptides. Superior stability.
+            Engineered for peak laboratory performance.
           </p>
           <div className="flex flex-col sm:flex-row gap-6">
             <Link href="/products">
-              <Button size="lg" className="rounded-full text-lg px-12 py-8 bg-primary hover:bg-tertiary transition-all hover:scale-105 shadow-[0_0_40px_rgba(255,0,0,0.3)] animate-shine font-black uppercase italic tracking-tighter">
+              <Button size="lg" className="rounded-full text-lg px-12 py-8 bg-primary hover:bg-tertiary transition-all hover:scale-105 shadow-[0_0_40px_rgba(59,130,246,0.3)] animate-shine font-black uppercase italic tracking-tighter text-white">
                 Shop Collection
               </Button>
             </Link>
@@ -47,7 +47,7 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-center mb-4 uppercase italic">
-              Why <span className="text-primary">Beast?</span>
+              Why <span className="text-primary">VialSupply?</span>
             </h2>
             <div className="h-2 w-24 bg-primary rounded-full" />
           </div>
@@ -58,7 +58,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold mb-3 uppercase italic">Fast Delivery</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Same-day dispatch on all local orders. We get your tins to you before you even know you need them.
+                Same-day dispatch on all local orders. We get your vials to your lab before you even know you need them.
               </p>
             </div>
 
@@ -68,7 +68,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold mb-3 uppercase italic">Discreet Shipping</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Plain packaging. No logos. Your business is your business. 100% confidential.
+                Plain packaging. No logos. Your business is your business. 100% confidential laboratory supply.
               </p>
             </div>
 
@@ -78,7 +78,7 @@ export default function Home() {
               </div>
               <h3 className="text-2xl font-bold mb-3 uppercase italic">Premium Pure</h3>
               <p className="text-muted-foreground leading-relaxed">
-                Zero fillers. Zero cap. Only the highest quality nicotine drops, curated for the elite.
+                Zero fillers. Zero cap. Only the highest quality research peptides, synthesized for the elite.
               </p>
             </div>
           </div>
@@ -94,9 +94,9 @@ export default function Home() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent opacity-20" />
         </div>
         <div className="container px-4 md:px-6 text-center relative z-10 mx-auto">
-          <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase italic tracking-tighter">Enter the Beast Mode?</h2>
-          <p className="text-xl max-w-2xl mx-auto mb-10 opacity-90">
-            Join the inner circle. Use code <span className="font-mono bg-white/20 px-2 py-1 rounded tracking-widest font-bold">BEAST24</span> for 15% off your first drop.
+          <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase italic tracking-tighter text-white">Accelerate Your Research?</h2>
+          <p className="text-xl max-w-2xl mx-auto mb-10 opacity-90 text-white">
+            Join the inner circle. Use code <span className="font-mono bg-white/20 px-2 py-1 rounded tracking-widest font-bold">VIAL24</span> for 15% off your first peptide order.
           </p>
           <Link href="/products">
             <Button
@@ -104,7 +104,7 @@ export default function Home() {
               variant="outline"
               className="rounded-full px-12 py-8 text-xl font-black uppercase italic border-2 border-white text-white hover:bg-white hover:text-primary transition-all shadow-2xl"
             >
-              Secure The Tins
+              Secure The Vials
             </Button>
           </Link>
         </div>
@@ -113,53 +113,53 @@ export default function Home() {
       {/* Testimonials */}
       <section className="py-16 flex flex-col items-center w-full">
         <div className="container px-4 md:px-6 w-full">
-          <h2 className="text-3xl font-bold text-center mb-12">What The Homies Say</h2>
+          <h2 className="text-3xl font-bold text-center mb-12">What Researchers Say</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="p-6 rounded-lg bg-card border border-border">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-primary-foreground">
+                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-white">
                   JB
                 </div>
                 <div className="ml-4">
-                  <h4 className="font-bold">Jake B.</h4>
-                  <p className="text-sm text-muted-foreground">Fitness Coach</p>
+                  <h4 className="font-bold">Dr. Jeffrey B.</h4>
+                  <p className="text-sm text-muted-foreground">Biomedical Researcher</p>
                 </div>
               </div>
               <p className="text-muted-foreground">
-                "Finally, a drop that doesn't taste like chemicals. My clients love the flavor profiles,
-                and I love that they stay steady throughout their sessions."
+                "Finally, a domestic source with verifiable purity. VialSupply is the only supplier we use now.
+                Our assay consistency has improved dramatically."
               </p>
             </div>
 
             <div className="p-6 rounded-lg bg-card border border-border">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-primary-foreground">
+                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-white">
                   SR
                 </div>
                 <div className="ml-4">
                   <h4 className="font-bold">Sarah R.</h4>
-                  <p className="text-sm text-muted-foreground">CrossFit Athlete</p>
+                  <p className="text-sm text-muted-foreground">Lab Director</p>
                 </div>
               </div>
               <p className="text-muted-foreground">
-                "Beast Tins has been a game-changer for my focus sessions. Clean strength,
-                premium flavors, and I don't have to crash after a long day."
+                "VialSupply has been a game-changer for our clinical research models. Pure composition,
+                discreet shipping, and fast delivery."
               </p>
             </div>
 
             <div className="p-6 rounded-lg bg-card border border-border">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-primary-foreground">
+                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-white">
                   MT
                 </div>
                 <div className="ml-4">
-                  <h4 className="font-bold">Mike T.</h4>
-                  <p className="text-sm text-muted-foreground">Weightlifter</p>
+                  <h4 className="font-bold">Michael T.</h4>
+                  <p className="text-sm text-muted-foreground">Biochemist</p>
                 </div>
               </div>
               <p className="text-muted-foreground">
-                "No cap, these tins are fire. I've tried all the drop brands, and Beast
-                Tins is the only one that hits different. Arctic Mint is my go-to."
+                "No cap, these vials are top tier. I've run HPLC on multiple batches and they consistently
+                hit 99.8%+ purity. BPC-157 is our primary compound."
               </p>
             </div>
           </div>
