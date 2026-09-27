@@ -1,9 +1,10 @@
+import { TextHoverEffect } from '@/components/velora/text-hover-effect';
 import Link from 'next/link';
 import React from 'react';
 
 const Footer = () => {
   return (
-    <footer className="bg-card mt-12 py-12 border-t border-border w-full flex justify-center">
+    <footer className="mt-12 flex w-full flex-col items-center border-t border-border bg-card py-12">
       <div className="container px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Column */}
@@ -14,7 +15,8 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-muted-foreground text-sm font-medium">
-              Premium research peptides for metabolic, recovery, and performance enhancement. Pure, fast, and domestic.
+              Premium research peptides for metabolic, recovery, and performance enhancement. Pure,
+              fast, and domestic.
             </p>
             <div className="flex space-x-4">
               <a href="https://instagram.com" className="text-foreground hover:text-primary">
@@ -38,13 +40,12 @@ const Footer = () => {
 
           {/* Links Columns */}
           <div>
-            <h3 className="text-sm font-black uppercase italic tracking-tighter mb-4 text-primary">The Vault</h3>
+            <h3 className="text-sm font-black uppercase italic tracking-tighter mb-4 text-primary">
+              The Vault
+            </h3>
             <ul className="space-y-2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
               <li>
-                <Link
-                  href="/products"
-                  className="hover:text-primary transition-colors"
-                >
+                <Link href="/products" className="hover:text-primary transition-colors">
                   All Drops
                 </Link>
               </li>
@@ -126,14 +127,6 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="/distribution"
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  GTA Drops & Shipping
-                </Link>
-              </li>
-              <li>
-                <Link
                   href="/privacy"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
@@ -148,8 +141,13 @@ const Footer = () => {
           <p className="text-xs text-muted-foreground font-bold uppercase tracking-widest">
             © 2026 VialSupply. All rights reserved.
           </p>
-          <p className="text-xs text-muted-foreground mt-4 md:mt-0 font-bold uppercase tracking-widest">Built for the <span className="text-primary italic font-black">Elite</span></p>
+          <p className="text-xs text-muted-foreground mt-4 md:mt-0 font-bold uppercase tracking-widest">
+            Built for the <span className="text-primary italic font-black">Elite</span>
+          </p>
         </div>
+      </div>
+      <div className="mt-10 w-full border-t border-primary/15 px-4 pt-12 md:pt-16">
+        <TextHoverEffect text="VIAL SUPPLY" className="mx-auto w-full font-black" />
       </div>
     </footer>
   );

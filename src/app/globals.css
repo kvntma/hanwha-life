@@ -1,6 +1,8 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -36,7 +38,44 @@
   --color-sidebar-ring: var(--sidebar-ring);
   --color-tertiary: var(--tertiary);
   --color-tertiary-foreground: var(--tertiary-foreground);
-}
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  @keyframes shimmer {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+  --color-brand: var(--brand);
+  --color-brand-from: var(--brand-from);
+  --color-brand-via: var(--brand-via);
+  --color-brand-to: var(--brand-to);
+  --animate-moving-border: moving-border var(--mb-duration, 4s) linear infinite;
+  @keyframes moving-border {
+    from {
+      offset-distance: 0%;
+    }
+    to {
+      offset-distance: 100%;
+    }
+  }
+  --animate-retro-grid: retro-grid 18s linear infinite;
+  @keyframes retro-grid {
+    from {
+      transform: translateY(-50%);
+    }
+    to {
+      transform: translateY(0);
+    }
+  }
+  --animate-gradient: gradient 6s ease infinite
+;
+  @keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;}
+  50% {
+    background-position: 100% 50%;}}}
 
 :root {
   --radius: 1.5rem;
@@ -72,8 +111,12 @@
   --sidebar-accent-foreground: hsl(240 10% 3.9%);
   --sidebar-border: hsl(240 5.9% 90%);
   --sidebar-ring: hsl(221.2 83.2% 53.3%);
-  --tertiary: hsl(174 75% 33%);
-  --tertiary-foreground: hsl(0 0% 100%);
+  --tertiary: hsl(199 89% 48%);
+  --tertiary-foreground: hsl(222.2 47.4% 11.2%);
+  --brand: oklch(0.546 0.245 263);
+  --brand-from: oklch(0.546 0.245 263);
+  --brand-via: oklch(0.623 0.214 260);
+  --brand-to: oklch(0.685 0.169 237);
 }
 
 .dark {
@@ -109,8 +152,12 @@
   --sidebar-accent-foreground: hsl(0 0% 98%);
   --sidebar-border: hsl(240 3.7% 15.9%);
   --sidebar-ring: hsl(217.2 91.2% 59.8%);
-  --tertiary: hsl(174 60% 25%);
-  --tertiary-foreground: hsl(0 0% 98%);
+  --tertiary: hsl(199 95% 60%);
+  --tertiary-foreground: hsl(222.2 47.4% 11.2%);
+  --brand: oklch(0.623 0.214 260);
+  --brand-from: oklch(0.623 0.214 260);
+  --brand-via: oklch(0.707 0.165 255);
+  --brand-to: oklch(0.746 0.16 233);
 }
 
 @layer base {
@@ -213,26 +260,6 @@
 .animate-shine:hover::after {
   opacity: 1;
   animation: shine-sweep 1.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@keyframes shimmer-sweep {
-  0% {
-    background-position: 200% 0;
-  }
-  100% {
-    background-position: -200% 0;
-  }
-}
-
-.shimmer-overlay {
-  background-image: linear-gradient(
-    110deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.35) 50%,
-    transparent 70%
-  );
-  background-size: 250% 100%;
-  animation: shimmer-sweep 2.5s linear infinite;
 }
 
 @keyframes aurora-1 {

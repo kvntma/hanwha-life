@@ -1,87 +1,115 @@
-import { AuroraBackground } from '@/components/common/aurora-background';
+import { CtaNewsletter } from '@/components/blocks/cta-newsletter';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { AnimatedGradientText } from '@/components/velora/animated-gradient-text';
+import { BlurFade } from '@/components/velora/blur-fade';
+import { FlipWords } from '@/components/velora/flip-words';
+import { RetroGrid } from '@/components/velora/retro-grid';
+import { ShimmerButton } from '@/components/velora/shimmer-button';
+import { SpotlightCard } from '@/components/velora/spotlight-card';
+import { TextHighlighter } from '@/components/velora/text-highlighter';
+import { TextReveal } from '@/components/velora/text-reveal';
+import { WavyBackground } from '@/components/velora/wavy-background';
+import { WobbleCard } from '@/components/velora/wobble-card';
 import { ShieldCheck, Truck, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { FeaturedProducts } from './components/FeaturedProducts';
 
 export default function Home() {
   return (
-    <div className="space-y-8 w-full flex flex-col items-center">
+    <div className="space-y-10 w-full flex flex-col items-center">
       <section className="relative h-[80vh] w-full flex items-center justify-center overflow-hidden bg-background">
-        <div className="absolute inset-0 z-0">
-          <AuroraBackground />
-        </div>
-
+        <WavyBackground
+          waves={5}
+          blur={20}
+          opacity={0.35}
+          colors={['--primary', '--tertiary']}
+          className="z-0 top-1/3"
+        />
         <div className="container relative z-10 px-4 md:px-6 flex flex-col items-center text-center">
           <Badge className="mb-4 bg-card/60 text-foreground border border-border/60 py-1.5 px-6 text-xs font-bold uppercase tracking-widest overflow-hidden relative backdrop-blur">
-            <span className="animate-smoke-drift relative z-10">Premium Vials Refined</span>
+            <span className="animate-smoke-drift relative z-10">Premium Peptides Refined</span>
           </Badge>
           <h1 className="text-5xl md:text-8xl lg:text-9xl font-black leading-tight tracking-tighter mb-4 text-foreground uppercase italic">
-            <span className="animate-smoke">Vial</span>
+            <AnimatedGradientText solid className="animate-smoke">
+              Vial
+            </AnimatedGradientText>
             <span className="text-primary">Supply</span>
           </h1>
-          <p className="text-xl md:text-2xl text-foreground max-w-xl mb-12 font-medium">
-            Accelerate your research. High-purity peptides. Superior stability. Engineered for peak
-            laboratory performance.
-          </p>
+          <h2 className="flex items-center justify-center gap-3 text-3xl md:text-6xl font-black leading-tight tracking-tighter text-foreground mb-12">
+            <span>Fuel Your </span>
+            <FlipWords className="text-primary" duration={1000} words={['Research', 'Body', 'Future']} />
+          </h2>
           <div className="flex flex-col sm:flex-row gap-6">
             <Link href="/products">
-              <Button
-                size="lg"
-                className="relative overflow-hidden rounded-full text-lg px-12 py-8 bg-primary hover:bg-tertiary transition-all hover:scale-105 shadow-[0_0_40px_rgba(59,130,246,0.3)] font-black uppercase italic tracking-tighter text-primary-foreground"
-              >
-                <span className="relative z-10 inline-flex items-center gap-2">
-                  Shop Collection
-                </span>
-                <span aria-hidden="true" className="motion-safe:shimmer-overlay absolute inset-0" />
-              </Button>
+              <ShimmerButton className="h-auto px-12 py-6 text-lg font-black uppercase italic tracking-tighter hover:bg-tertiary shadow-[0_0_40px_rgba(59,130,246,0.3)]">
+                Shop Collection
+              </ShimmerButton>
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="py-24 bg-background">
+      <section className="py-18 bg-background">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-center mb-4 uppercase italic">
-              Why <span className="text-primary">VialSupply?</span>
-            </h2>
-            <div className="h-2 w-24 bg-primary rounded-full" />
+            <BlurFade delay={0.4} className="max-w-2xl text-center">
+              <h2 className="text-4xl md:text-5xl font-black text-center mb-4 uppercase italic">
+                Why <span className="text-primary">Choose Us?</span>
+              </h2>
+              <div className="mx-auto mb-6 h-2 w-4/5 rounded-full bg-primary" />
+              <p className="text-lg leading-relaxed text-muted-foreground md:text-xl">
+                Zero food noise, zero shipping noise : we{' '}
+                <TextHighlighter color="color-mix(in oklab, var(--primary) 28%, transparent)">
+                  silence both.
+                </TextHighlighter>
+              </p>
+            </BlurFade>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group">
-              <div className="rounded-2xl bg-primary/10 p-5 mb-6 group-hover:bg-primary transition-colors">
-                <Truck className="h-10 w-10 text-primary group-hover:text-white" />
+            <SpotlightCard
+              className="flex flex-col items-center text-center p-8 md:py-14 md:px-10 rounded-[2rem] hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group"
+              color="color-mix(in oklab, var(--primary) 16%, transparent)"
+            >
+              <div className="flex flex-row items-center w-full rounded-2xl bg-primary/10 p-5 md:py-6 md:px-6 mb-8 group-hover:bg-primary transition-colors">
+                <Truck className="h-10 w-10 text-primary group-hover:text-white shrink-0" />
+                <h3 className="flex-1 text-center text-2xl font-bold uppercase italic group-hover:text-white transition-colors">Fast Delivery</h3>
+                <div className="w-10 shrink-0" aria-hidden="true" />
               </div>
-              <h3 className="text-2xl font-bold mb-3 uppercase italic">Fast Delivery</h3>
               <p className="text-muted-foreground leading-relaxed">
                 Same-day dispatch on all local orders. We get your vials to your lab before you even
                 know you need them.
               </p>
-            </div>
+            </SpotlightCard>
 
-            <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group">
-              <div className="rounded-2xl bg-primary/10 p-5 mb-6 group-hover:bg-primary transition-colors">
-                <ShieldCheck className="h-10 w-10 text-primary group-hover:text-white" />
+            <SpotlightCard
+              className="flex flex-col items-center text-center p-8 md:py-14 md:px-10 rounded-[2rem] hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group"
+              color="color-mix(in oklab, var(--primary) 16%, transparent)"
+            >
+              <div className="flex flex-row items-center w-full rounded-2xl bg-primary/10 p-5 md:py-6 md:px-6 mb-8 group-hover:bg-primary transition-colors">
+                <ShieldCheck className="h-10 w-10 text-primary group-hover:text-white shrink-0" />
+                <h3 className="flex-1 text-center text-2xl font-bold uppercase italic group-hover:text-white transition-colors">Discreet Shipping</h3>
+                <div className="w-10 shrink-0" aria-hidden="true" />
               </div>
-              <h3 className="text-2xl font-bold mb-3 uppercase italic">Discreet Shipping</h3>
               <p className="text-muted-foreground leading-relaxed">
                 Plain packaging. No logos. Your business is your business. 100% confidential
                 laboratory supply.
               </p>
-            </div>
+            </SpotlightCard>
 
-            <div className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-card border border-border hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group">
-              <div className="rounded-2xl bg-primary/10 p-5 mb-6 group-hover:bg-primary transition-colors">
-                <Zap className="h-10 w-10 text-primary group-hover:text-white" />
+            <SpotlightCard
+              className="flex flex-col items-center text-center p-8 md:py-14 md:px-10 rounded-[2rem] hover:border-primary/50 transition-all duration-500 hover:shadow-[0_20px_60px_-10px_rgba(255,255,255,0.2),0_0_30px_rgba(255,255,255,0.05)] group"
+              color="color-mix(in oklab, var(--primary) 16%, transparent)"
+            >
+              <div className="flex flex-row items-center w-full rounded-2xl bg-primary/10 p-5 md:py-6 md:px-6 mb-8 group-hover:bg-primary transition-colors">
+                <Zap className="h-10 w-10 text-primary group-hover:text-white shrink-0" />
+                <h3 className="flex-1 text-center text-2xl font-bold uppercase italic group-hover:text-white transition-colors">Premium Pure</h3>
+                <div className="w-10 shrink-0" aria-hidden="true" />
               </div>
-              <h3 className="text-2xl font-bold mb-3 uppercase italic">Premium Pure</h3>
               <p className="text-muted-foreground leading-relaxed">
                 Zero fillers. Zero cap. Only the highest quality research peptides, synthesized for
                 the elite.
               </p>
-            </div>
+            </SpotlightCard>
           </div>
         </div>
       </section>
@@ -89,43 +117,26 @@ export default function Home() {
       {/* Featured Products */}
       <FeaturedProducts />
 
-      {/* CTA Section */}
-      <section className="py-24 bg-primary text-primary-foreground w-full relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent opacity-20" />
-        </div>
-        <div className="container px-4 md:px-6 text-center relative z-10 mx-auto">
-          <h2 className="text-4xl md:text-6xl font-black mb-6 uppercase italic tracking-tighter text-white">
-            Accelerate Your Research?
-          </h2>
-          <p className="text-xl max-w-2xl mx-auto mb-10 opacity-90 text-white">
-            Join the inner circle. Use code{' '}
-            <span className="font-mono bg-white/20 px-2 py-1 rounded tracking-widest font-bold">
-              VIAL24
-            </span>{' '}
-            for 15% off your first peptide order.
-          </p>
-          <Link href="/products">
-            <Button
-              size="lg"
-              variant="outline"
-              className="relative overflow-hidden rounded-full px-12 py-8 text-xl font-black uppercase italic border-2 border-white text-white hover:bg-white hover:text-primary transition-all hover:scale-105 shadow-2xl"
-            >
-              <span className="relative z-10 inline-flex items-center gap-2">Secure The Vials</span>
-              <span aria-hidden="true" className="motion-safe:shimmer-overlay absolute inset-0" />
-            </Button>
-          </Link>
-        </div>
-      </section>
+      <CtaNewsletter />
 
       {/* Testimonials */}
-      <section className="py-16 flex flex-col items-center w-full">
-        <div className="container px-4 md:px-6 w-full">
-          <h2 className="text-3xl font-bold text-center mb-12">What Researchers Say</h2>
+      <section className="relative flex w-full flex-col items-center overflow-hidden bg-background py-32 md:py-40">
+        <div aria-hidden className="absolute inset-x-0 bottom-0 h-3/4">
+          <RetroGrid angle={65} cellSize={48} opacity={0.9} />
+        </div>
+        <div className="container relative z-10 w-full px-4 md:px-6">
+          <TextReveal
+            as="h2"
+            text="What People Say About Our Products"
+            className="mb-12 block text-center text-3xl font-black uppercase italic tracking-tighter md:text-5xl"
+          />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="p-6 rounded-2xl bg-card border border-border">
+            <WobbleCard
+              className="border border-primary/15 bg-white text-slate-950 shadow-lg shadow-primary/5"
+              contentClassName="p-6 [&_.text-muted-foreground]:text-slate-600"
+            >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-white">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg font-bold text-primary">
                   JB
                 </div>
                 <div className="ml-4">
@@ -137,11 +148,14 @@ export default function Home() {
                 "Finally, a domestic source with verifiable purity. VialSupply is the only supplier
                 we use now. Our assay consistency has improved dramatically."
               </p>
-            </div>
+            </WobbleCard>
 
-            <div className="p-6 rounded-2xl bg-card border border-border">
+            <WobbleCard
+              className="border border-primary/15 bg-white text-slate-950 shadow-lg shadow-primary/5"
+              contentClassName="p-6 [&_.text-muted-foreground]:text-slate-600"
+            >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-white">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg font-bold text-primary">
                   SR
                 </div>
                 <div className="ml-4">
@@ -153,11 +167,14 @@ export default function Home() {
                 "VialSupply has been a game-changer for our clinical research models. Pure
                 composition, discreet shipping, and fast delivery."
               </p>
-            </div>
+            </WobbleCard>
 
-            <div className="p-6 rounded-2xl bg-card border border-border">
+            <WobbleCard
+              className="border border-primary/15 bg-white text-slate-950 shadow-lg shadow-primary/5"
+              contentClassName="p-6 [&_.text-muted-foreground]:text-slate-600"
+            >
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-lg font-bold text-white">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-lg font-bold text-primary">
                   MT
                 </div>
                 <div className="ml-4">
@@ -169,7 +186,8 @@ export default function Home() {
                 "No cap, these vials are top tier. I've run HPLC on multiple batches and they
                 consistently hit 99.8%+ purity. BPC-157 is our primary compound."
               </p>
-            </div>
+            </WobbleCard>
+
           </div>
         </div>
       </section>

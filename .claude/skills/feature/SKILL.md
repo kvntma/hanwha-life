@@ -76,10 +76,15 @@ If findings are returned, send only those findings and necessary context back to
 
 ## 6. Verify
 
-Run relevant:
-- tests
-- type checks
-- linting
-- reproduction steps
+The coordinator owns final verification.
 
-Summarize completion and unresolved concerns.
+The implementation agent should not start servers, browsers, or integration
+environments unless explicitly instructed.
+
+After implementation:
+
+1. Review the implementation result.
+2. Decide whether additional validation is necessary.
+3. Ask the user or perform validation only when appropriate.
+
+Prefer cheap static validation before runtime validation.

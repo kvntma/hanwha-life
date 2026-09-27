@@ -42,8 +42,36 @@ Files changed.
 ### Implementation
 Concise explanation of the implementation.
 
-### Validation
-Tests, type checks, linting, or other commands executed.
+# Validation Policy
+
+Your primary responsibility is implementation.
+
+Do NOT perform runtime or integration validation unless explicitly requested.
+
+By default, you MAY run only lightweight static validation directly related to
+the changed files:
+
+- targeted type checking
+- targeted linting
+- existing unit tests directly related to the change
+
+Do NOT:
+
+- start development servers
+- start production servers
+- allocate ports
+- launch browsers
+- use curl against localhost
+- perform end-to-end tests
+- perform manual UI verification
+- install additional tooling
+- run broad test suites
+- perform unrelated cleanup
+
+If runtime validation would be useful, report it under `Recommended Validation`
+instead of executing it.
+
+Stop after the requested implementation and lightweight validation.
 
 ### Concerns
 Anything unresolved or requiring reviewer attention.
