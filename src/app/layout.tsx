@@ -48,10 +48,27 @@ export const metadata: Metadata = {
   },
 };
 
+function isDynamicServerUsageError(error: unknown) {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    'digest' in error &&
+    error.digest === 'DYNAMIC_SERVER_USAGE'
+  );
+}
+
 // This makes the layout a Server Component
 export default async function Layout({ children }: { children: React.ReactNode }) {
   // Fetch only featured products on the server
-  const featuredProducts = await getFeaturedProducts();
+  const featuredProducts = await getFeaturedProducts().catch((error) => {
+    if (isDynamicServerUsageError(error)) {
+      throw error;
+    }
+
+    // biome-ignore lint/suspicious/noConsole: Server-side prefetch failures require diagnostic logging.
+    console.error('Failed to prefetch featured products:', error);
+    return undefined;
+  });
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -59,9 +76,7 @@ export default async function Layout({ children }: { children: React.ReactNode }
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <AuthProvider>
             <QueryProvider
-              initialData={{
-                featuredProducts,
-              }}
+              initialData={featuredProducts ? { featuredProducts } : undefined}
             >
               <TooltipProvider>
                 <CartProvider>

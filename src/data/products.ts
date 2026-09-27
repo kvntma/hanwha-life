@@ -19,7 +19,7 @@ export const products: Product[] = [
     name: 'BPC-157 Regenerate',
     tagline: 'Cellular healing catalyst.',
     description: 'Body Protection Compound 157 is a premium peptide designed to support tissue recovery, joint health, and gut system healing. High-purity formula.',
-    image: 'https://images.unsplash.com/photo-1576086213369-97a306dca665?q=80&w=2070&auto=format&fit=crop',
+    image: 'https://images.unsplash.com/photo-1576671081837-49000212a370?q=80&w=2070&auto=format&fit=crop',
     price: 69.99,
     category: 'Signature',
     inventory_count: 150,
@@ -52,7 +52,7 @@ export const products: Product[] = [
     category: 'Standard',
     inventory_count: 120,
     weight: '10mg vial',
-    featured: false,
+    featured: true,
     strength_mg: 10,
     flavor_profile: '99.7% Purity / Lyophilized'
   }
